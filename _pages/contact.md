@@ -9,16 +9,14 @@ Feel free to reach out to me through any of the following channels:
 
 ## Professional Networks
 
-- [LinkedIn Profile](#)
-- [GitHub Profile](#)
-- [Other professional network](#)
+- [LinkedIn Profile](www.linkedin.com/in/jiaqiyin)
+- [GitHub Profile](https://github.com/jackie-jiaqi-yin)
+
 
 ## Email
 
-- [your.email@example.com](#)
+- [jiaqiyin1014@microsoft.com](mailto:jiaqiyin1014@microsoft.com)
 
 ## Other
 
-- [Twitter](#)
-- [Medium](#)
-- [Personal Blog](#) 
+- [Medium](https://medium.com/@jiaqiyin1014)

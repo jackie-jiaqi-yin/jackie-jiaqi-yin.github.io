@@ -1,9 +1,215 @@
 ---
-# Only the main Sass file needs front matter (the dashes are enough)
-search: false
 ---
 
 @charset "utf-8";
 
-@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
-@import "minimal-mistakes"; // main partials
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+// or any other Google Font you prefer
+
+// Override font variables (the exact variable names depend on your theme)
+$global-font-family: 'Roboto', sans-serif;
+$header-font-family: 'Roboto', sans-serif;
+
+// Override font sizes for better readability
+$doc-font-size: 15px;
+$doc-font-size-medium: 15px;  // Keep consistent on medium screens
+$doc-font-size-large: 16px;   // Slightly larger on large screens
+$doc-font-size-x-large: 16px; // Cap at 16px for x-large screens
+
+// Import the theme styles (must be after your customizations)
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}";
+@import "minimal-mistakes";
+$global-font-weight: 400;
+$header-font-weight: 400;
+
+// Override width variables to make content wider
+$max-width: 1640px;              // Increase overall max width
+$content-width: 1400px;          // Increase content area width
+
+// For Minimal Mistakes specific variables
+$right-sidebar-width-narrow: 200px;    // Default: 200px
+$right-sidebar-width: 250px;           // Default: 300px
+$right-sidebar-width-wide: 300px;      // Default: 400px
+
+// Reduce side padding on mobile
+@media (max-width: 768px) {
+  .page {
+    padding: 0 10px;
+  }
+}
+
+// add paragraph spacing
+/* Reduce spacing between paragraph and list */
+p + ul {
+    margin-top: 0.3em; /* Reduced space between paragraph and list */
+}
+
+/* Reduce spacing for paragraph that precedes the list */
+p:has(+ ul) {
+    margin-bottom: 0.3em; /* Reduced bottom margin for paragraph */
+}
+
+/* Make the list more compact */
+ul {
+    margin-top: 0;
+    margin-bottom: 0.5em
+}
+
+li {
+    margin-bottom: 0.2em; /* Reduced spacing between items */
+    line-height: 1.3; /* Tighter line height */
+}
+
+// Feature row image styling for consistent sizing
+.feature__item--left,
+.feature__item--right,
+.feature__item--center {
+  .archive__item-teaser {
+    img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}
+
+// Make masthead title and subtitle larger and sticky
+.masthead {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  background-color: #f3f6f6 !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+
+  .site__title {
+    font-size: 1.3em !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+  }
+
+  .site__subtitle {
+    font-size: 0.8em !important;
+    font-weight: 400 !important;
+    margin-top: 0.5em !important;
+    display: block !important;
+  }
+}
+
+// Alternative selectors in case the above don't work
+.masthead__inner-wrap {
+  a {
+    font-size: 1.2em !important;
+    font-weight: 700 !important;
+  }
+}
+
+.greedy-nav a.site__title {
+  font-size: 1.2em !important;
+  font-weight: 700 !important;
+}
+
+// News section styling
+.news-section {
+  max-width: 1000px;
+  margin: 3em auto;
+  padding: 2em;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #52adc8;
+
+  h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 0.8em;
+  }
+
+  .news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 1em;
+
+    // Custom scrollbar styling
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #e9ecef;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #52adc8;
+      border-radius: 4px;
+
+      &:hover {
+        background: #3d8ba5;
+      }
+    }
+
+    li {
+      padding: 0.6em 0;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      gap: 1em;
+      align-items: flex-start;
+      margin-bottom: 0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .news-date {
+        font-weight: 600;
+        color: #52adc8;
+        min-width: 110px;
+        font-size: 0.9em;
+        line-height: 1.4;
+      }
+
+      .news-content {
+        flex: 1;
+        line-height: 1.5;
+        font-size: 0.95em;
+
+        a {
+          color: #52adc8;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive design for news section
+@media (max-width: 768px) {
+  .news-section {
+    padding: 1.5em;
+    margin: 2em 1em;
+
+    .news-list {
+      max-height: 350px;
+
+      li {
+        flex-direction: column;
+        gap: 0.3em;
+
+        .news-date {
+          min-width: auto;
+        }
+      }
+    }
+  }
+}
+
+
+
