@@ -4,12 +4,12 @@ main:
     url: /
   - title: "About"
     url: /about/
-  - title: "Experience"
-    url: /experience/
+  # - title: "Experience"
+  #   url: /experience/
   - title: "Projects"
     url: /projects/
-  - title: "Blog"
-    url: /blog/
+  # - title: "Blog"
+  #   url: /blog/
   - title: "Contact"
     url: /contact/
   # - title: "Quick-Start Guide"
