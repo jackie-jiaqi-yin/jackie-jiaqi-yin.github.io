@@ -82,7 +82,7 @@ google:
   search_engine_id       : # YOUR_SEARCH_ENGINE_ID
   instant_search         : # false (default), true
 # SEO Related
-google_site_verification :
+google_site_verification : "uGaAZS_YL4-Bcue8ZStDiVb2c5xAGhaOWgsT3Z10Yw8"
 bing_site_verification   :
 naver_site_verification  :
 yandex_site_verification :
@@ -95,20 +95,24 @@ facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 : # Open Graph/Twitter default site image
+og_image                 : "/assets/images/profile.jpg" # Open Graph/Twitter default site image
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : # Person or Organization (defaults to Person)
-  name                   : # If the user or organization name differs from the site's name
+  type                   : "Person" # Person or Organization (defaults to Person)
+  name                   : "Jackie Jiaqi Yin" # If the user or organization name differs from the site's name
   links: # An array of links to social media profiles
+    - "https://linkedin.com/in/jiaqiyin"
+    - "https://github.com/jackie-jiaqi-yin"
+    - "https://medium.com/@jiaqiyin1014"
+    - "https://jackie-jiaqi-yin.github.io"
 
 # Analytics
 analytics:
-  provider               : # false (default), "google", "google-universal", "google-gtag", "custom"
+  provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
   google:
-    tracking_id          :
-    anonymize_ip         : # true, false (default)
+    tracking_id          : "G-SEG6R0887E"
+    anonymize_ip         : false # true, false (default)
 
 
 # Site Author
