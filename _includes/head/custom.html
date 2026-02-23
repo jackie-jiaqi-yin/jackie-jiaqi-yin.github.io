@@ -2,4 +2,42 @@
 
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var links = document.querySelectorAll("a[href]");
+
+    links.forEach(function (link) {
+      var href = link.getAttribute("href");
+      if (!href) return;
+
+      if (
+        href.charAt(0) === "#" ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        href.startsWith("javascript:")
+      ) {
+        return;
+      }
+
+      var url;
+      try {
+        url = new URL(link.href, window.location.href);
+      } catch (error) {
+        return;
+      }
+
+      if (url.origin === window.location.origin) return;
+
+      link.setAttribute("target", "_blank");
+
+      var relValues = (link.getAttribute("rel") || "")
+        .split(/\s+/)
+        .filter(Boolean);
+      if (!relValues.includes("noopener")) relValues.push("noopener");
+      if (!relValues.includes("noreferrer")) relValues.push("noreferrer");
+      link.setAttribute("rel", relValues.join(" "));
+    });
+  });
+</script>
+
 <!-- end custom head snippets -->

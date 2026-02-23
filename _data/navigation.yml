@@ -8,6 +8,8 @@ main:
   #   url: /experience/
   - title: "Projects"
     url: /projects/
+  - title: "News"
+    url: /news/
   # - title: "Blog"
   #   url: /blog/
   - title: "Contact"
