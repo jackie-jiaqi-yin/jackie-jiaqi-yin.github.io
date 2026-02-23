@@ -9,6 +9,12 @@ toc_icon: "list"
 toc_sticky: true
 ---
 
+## codex-skills - Reusable Codex Skill Pack
+
+I built **codex-skills** as an open-source repository of reusable Codex skills that package repeatable workflows for research and AI engineering tasks. The current release includes `arxiv-latest-summary`, a skill that turns plain-language research interests into recent arXiv scans and polished HTML/PDF outputs. This project makes it easier to install and run high-quality, task-focused automations directly in Codex.
+- **Open Source**: [GitHub: jackie-jiaqi-yin/codex-skills](https://github.com/jackie-jiaqi-yin/codex-skills)
+- **Example Generation**: [View a sample generated report](../assets/demos/codex-skills/report.html)
+
 ## Schema Lineage Extraction at Scale
 <img src="/assets/images/projects/schemalineage.png" alt="schemaLineage" width="400">
 
