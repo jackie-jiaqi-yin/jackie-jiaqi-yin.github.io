@@ -1,0 +1,50 @@
+- date_label: "January 2026"
+  title: "Joined OpenAI"
+  summary: "Started a new chapter as an ML Scientist at OpenAI, working on B2B revenue forecasting and strategic modeling."
+
+- date_label: "December 2025"
+  title: "NeurIPS 2025"
+  summary: "Attended NeurIPS 2025 and published notes on research trends, evaluation, and practical LLM takeaways."
+
+- date_label: "November 2025"
+  title: "Ignite Launch"
+  summary: "Helped deliver the Overview feature for Microsoft Copilot Notebooks, with work spanning context engineering and AI evaluation."
+  url: "https://drive.google.com/file/d/174UrwnOniIxVYEq_rfAEgqLB0p68IQdK/view"
+
+- date_label: "November 2025"
+  title: "Health AI Collaboration"
+  summary: "Started collaborating with Columbia University on AI BioAge, applying machine learning to biological aging and longevity research."
+
+- date_label: "October 2025"
+  title: "LLM Learning Journey Launched"
+  summary: "Published an actively updated site for LLM concepts, conference notes, and practical AI exploration."
+  url: "https://jackie-jiaqi-yin.github.io/llm-learning-journey/"
+
+- date_label: "October 2025"
+  title: "DA-Forge Released"
+  summary: "Released DA-Forge to automate declarative agent creation and deployment workflows for grounded enterprise AI systems."
+  url: "https://github.com/microsoft/da-forge"
+
+- date_label: "September 2025"
+  title: "Joined Copilot Notebooks"
+  summary: "Joined Microsoft Copilot Notebooks as an early AI scientist, focused on grounded AI product experiences."
+
+- date_label: "September 2025"
+  title: "Paper Accepted"
+  summary: "Schema Lineage Extraction at Scale was accepted to the NeurIPS 2025 LLM Evaluation Workshop and DL4C Workshop."
+  url: "https://arxiv.org/abs/2508.07179"
+
+- date_label: "August 2025"
+  title: "SLiCE Released"
+  summary: "Published the SLiCE Python package for schema-lineage evaluation on PyPI and GitHub."
+  url: "https://github.com/microsoft/SLiCE"
+
+- date_label: "June 2025"
+  title: "Data Reasoning Agent Demo"
+  summary: "Launched a data reasoning agent with customized RAG and SQL generation over schema-lineage-aware context."
+  url: "https://drive.google.com/file/d/1fI11E8DukAXvIrX8RgPeWs8ExYYpez7Q/view?usp=sharing"
+
+- date_label: "May 2025"
+  title: "ArxivSummary Open Sourced"
+  summary: "Released ArxivSummary publicly and upgraded the pipeline for large-scale daily paper synthesis."
+  url: "https://github.com/jackie-jiaqi-yin/ArxivSummary"

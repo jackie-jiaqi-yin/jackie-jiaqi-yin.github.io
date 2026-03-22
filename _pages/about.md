@@ -2,39 +2,61 @@
 title: "About Me"
 permalink: /about/
 layout: single
-author_profile: true
+seo_title: "About Jackie Jiaqi Yin | OpenAI, Forecasting, Grounded AI"
+description: "About Jackie Jiaqi Yin, also listed as Jackie Yin or Jiaqi Yin: ML Scientist at OpenAI focused on B2B revenue forecasting, strategic modeling, grounded AI systems, and applied AI evaluation."
+author_profile: false
+classes:
+  - wide
+  - interior-page
 ---
 
 ## Professional Summary
 
-I’m **Jackie Jiaqi Yin**, a Senior AI Scientist at **Microsoft Copilot Notebooks**, where I build intelligent, context-aware systems that help people reason across their work. My focus is on combining large language models, retrieval-augmented generation, and multi-agent evaluation frameworks to make AI assistance more grounded, transparent, and useful.
+I’m **Jackie Jiaqi Yin**, an **ML Scientist** at **OpenAI** focused on **B2B revenue forecasting** and **strategic modeling**. My day-to-day work centers on understanding business demand, improving forecast quality, and turning modeling results into decisions that can support revenue growth and better planning.
 
-With a background that spans **mathematics, biostatistics, and computer science**, I approach AI development as both a science and a design practice — balancing analytical rigor with an empathy for user experience. My work bridges data reasoning, system architecture, and evaluation methodology to ensure AI capabilities are measurable, trustworthy, and genuinely helpful to people.
+You may also find me online as **Jackie Yin**, **Jiaqi Yin**, or **殷佳祺**.
+
+My background also spans the broader AI stack. Before OpenAI, I led AI product work in **Microsoft Copilot Notebooks**, where I worked on context engineering, evaluation, tool usage, and grounded AI experiences. Across my career, I have combined machine learning, experimentation, forecasting, and product thinking to build systems that are useful in practice, not just accurate on paper.
+
+Alongside my core role, I stay close to self-driven AI work: open-source tooling, research-reading systems, data mining utilities, and collaborations in areas such as **health AI** and **aging**. That mix of business modeling, applied AI, and independent technical curiosity is what defines my work.
 
 ---
 
-## Experience
+## Current Work
+
+### OpenAI
+*January 2026 – Present*
+
+I work on B2B revenue forecasting and strategic modeling, with an emphasis on understanding demand signals, identifying growth drivers, and translating noisy business data into decisions that matter.
+
+### What I Bring
+- Machine learning and forecasting for business-critical planning problems
+- Strategic modeling that connects data signals to growth decisions
+- A product mindset shaped by prior AI system and evaluation work
+- A strong interest in building practical AI tools outside the core job
+
+---
 
 ### Microsoft — Senior Applied Scientist  
-*Aug 2020 – Present | Redmond, WA*  
+*Aug 2020 – Jan 2026 | Redmond, WA*  
 
-**Copilot Notebooks (2025 – Present)**  
-Building AI features focused on data curation, context engineering—including prompt reasoning, tool usage, and LLM-as-Judge evaluation for scenarios without ground truth. As an early senior member, I help shape the AI foundations that ensure product-wide reliability and scalability.
+**Copilot Notebooks (2025 – 2026)**  
+Led AI product and evaluation work focused on data curation, context engineering, prompt reasoning, tool usage, and LLM-as-judge evaluation for scenarios without ground truth. As an early senior member, I helped shape the AI foundations behind grounded, reliable notebook experiences.
 
 **Amplify AI & Business Insights (2020 – 2025)**  
-Led recommendation systems for M365 Support, including a two-tower model and Thompson sampling bandit approach. Served as the core scientist behind the Forecasting Service, now deployed in Dynamics 365 for both internal and external Microsoft customers. Defined fundamental ML infrastructure and experimentation frameworks for Microsoft 365 support.
+Led recommendation systems for Microsoft 365 support, including a two-tower model and Thompson sampling bandit approach. I also served as the core scientist behind a forecasting service deployed in Dynamics 365 for internal and external customers, and helped define the ML infrastructure and experimentation frameworks that supported those systems.
 
 **Key Themes Across Roles:**  
-Applied AI system design, data reasoning and context engineering, LLM prompt and evaluation strategy (LLM-as-Judge), recommender systems, forecasting and experimentation frameworks.
+Applied AI system design, context engineering, LLM evaluation, recommender systems, forecasting, experimentation, and business-focused modeling.
 
 ---
 
 ## Areas of Expertise
-- **Agentic AI Systems** – collaborative, context-aware workflows  
-- **Retrieval-Augmented Generation (RAG)** – grounded knowledge access and synthesis  
-- **AI Evaluation** – human-aligned, scalable quality measurement  
-- **Experimentation & Metrics** – data-driven product iteration, AB experimentation and insight  
-- **Time Series Forecasting & ML Modeling** – predictive analytics and scalable forecasting systems  
+- **Revenue Forecasting & Strategic Modeling** – B2B demand understanding, growth planning, and decision support
+- **AI Product Development** – context engineering, prompt design, tool use, and grounded experiences
+- **AI Evaluation** – scalable measurement for systems without clean ground truth
+- **Retrieval-Augmented Generation** – grounded knowledge access and synthesis
+- **Experimentation & Metrics** – product iteration, A/B testing, and business insight
 - **Recommendation Systems** – personalization and adaptive decision algorithms
 
 ---
@@ -49,4 +71,4 @@ Applied AI system design, data reasoning and context engineering, LLM prompt and
 
 ## Beyond Work
 
-Outside of work, I’m passionate about **tennis** — both as a physical discipline and a way to practice focus, rhythm, and patience. I’m learning to turn it into a life-long hobby. I also enjoy experimenting with new recipes and exploring how creative processes mirror scientific thinking.
+Outside of work, I like building small open-source projects that help people read papers, work with data, or automate repetitive AI tasks. I also enjoy exploring new ideas across research, product design, and the kinds of technical problems that sit just outside the boundary of my day job.

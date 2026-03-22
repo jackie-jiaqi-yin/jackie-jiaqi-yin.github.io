@@ -1,0 +1,96 @@
+---
+layout: default
+---
+
+{% assign project_content = content | strip %}
+
+<section class="project-detail-shell">
+  <div class="page-shell">
+    <a class="project-back" href="{{ '/projects/' | relative_url }}">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      Back to projects
+    </a>
+
+    <div class="project-detail">
+      <div class="project-detail__media">
+        <div class="project-demo-frame">
+          <div class="project-demo-frame__inner">
+            {% if page.card_image %}
+              <img src="{{ page.card_image | relative_url }}" alt="{{ page.image_alt | default: page.title }}">
+            {% else %}
+              <div class="project-demo-frame__placeholder">
+                <span>Preview coming soon</span>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="project-detail__sidebar">
+        <p class="eyebrow">{{ page.card_tag }}</p>
+        <h1>{{ page.title }}</h1>
+        <p class="project-detail__subtitle">{{ page.subtitle }}</p>
+
+        <section class="project-detail__section">
+          <h2>What Is It?</h2>
+          <p>{{ page.summary }}</p>
+        </section>
+
+        {% if page.impact %}
+          <section class="project-detail__section">
+            <h2>Why It Matters</h2>
+            <p>{{ page.impact }}</p>
+          </section>
+        {% endif %}
+
+        {% if page.tools %}
+          <section class="project-detail__section">
+            <h2>Tools & Technologies</h2>
+            <div class="project-pill-row">
+              {% for tool in page.tools %}
+                <span class="project-pill">{{ tool }}</span>
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+
+        {% if page.links %}
+          <section class="project-detail__section">
+            <div class="project-action-row">
+              {% for link in page.links %}
+                {% assign action_url = link.url %}
+                {% assign is_external = false %}
+                {% if link.url contains '://' %}
+                  {% assign is_external = true %}
+                {% else %}
+                  {% assign action_url = link.url | relative_url %}
+                {% endif %}
+                <a
+                  class="project-action"
+                  href="{{ action_url }}"
+                  data-preview-modal="project"
+                  data-preview-title="{{ page.title | escape }}: {{ link.label | escape }}"
+                  data-preview-summary="{{ page.summary | escape }}"
+                >
+                  {% if link.icon %}
+                    <i class="{{ link.icon }}" aria-hidden="true"></i>
+                  {% else %}
+                    <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                  {% endif %}
+                  {{ link.label }}
+                </a>
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+      </aside>
+    </div>
+
+    {% if project_content != "" %}
+      <div class="project-detail__content">
+        {{ content }}
+      </div>
+    {% endif %}
+  </div>
+</section>

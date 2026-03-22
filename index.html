@@ -1,113 +1,160 @@
 ---
-layout: home
-author_profile: true
-
-feature_row:
-  - image_path: /assets/images/features/schemalineage-feature.png
-    alt: "Schema Lineage Extraction"
-    title: "Schema Lineage Extraction at Scale"
-    excerpt: "NeurIPS 2025 accepted research on extracting fine-grained schema lineage from enterprise data pipelines using LLMs."
-    url: "/projects/#schema-lineage-extraction-at-scale"
-    btn_class: "btn--primary"
-    btn_label: "Learn more"
-  - image_path: /assets/images/features/arxivsummary-feature.png
-    alt: "ArxivSummary"
-    title: "ArxivSummary Newsletter"
-    excerpt: "Automated AI research newsletter service delivering daily paper summaries to 90+ subscribers at Microsoft."
-    url: "/projects/#arxivsummary--internal-ai-research-newsletter-service"
-    btn_class: "btn--primary"
-    btn_label: "Learn more"
+layout: default
+seo_title: "Jackie Jiaqi Yin | ML Scientist at OpenAI"
+description: "Jackie Jiaqi Yin is an ML Scientist at OpenAI focused on B2B revenue forecasting, strategic modeling, grounded AI systems, LLM evaluation, and research tooling."
+classes:
+  - landing-page
 ---
 
-{% include feature_row %}
+<section class="hero-shell">
+  <div class="page-shell hero-shell__inner">
+    <div class="hero-cluster">
+      <div class="hero-avatar-wrap">
+        <img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="Portrait of Jackie Jiaqi Yin">
+      </div>
 
-<div class="news-section">
-  <h2>📰 Top News</h2>
-  <div class="news-slider news-slider--vertical" id="top-news-slider" aria-label="Top news slider">
-    <button type="button" class="news-slider-control up" aria-label="Scroll up">&#9650;</button>
-    <div class="news-slider-viewport">
-      <ul class="news-list">
-        <li>
-          <span class="news-date">January 2026</span>
-          <span class="news-content">🎉 <strong>Joined OpenAI:</strong> Started a new chapter at OpenAI.</span>
-        </li>
-        <li>
-          <span class="news-date">December 2025</span>
-          <span class="news-content">📝 <strong>NeurIPS 2025:</strong> Joined NeurIPS 2025. Check my notes <a href="https://jackie-jiaqi-yin.github.io/llm-learning-journey/talks/neurips-2025/">here</a>.</span>
-        </li>
-        <li>
-          <span class="news-date">November 2025</span>
-          <span class="news-content">💡 <strong>Design Team Presentation:</strong> Delivered presentation to Microsoft OneNote American Design team on AI product development, covering key topics: prompting strategies for agentic services like Copilot vs traditional LLMs, internal mechanisms of Copilot, the critical role of tool integration in feature development, and insights on how UX designers can contribute to AI product innovation.</span>
-        </li>
-        <li>
-          <span class="news-date">November 2025</span>
-          <span class="news-content">🎤 <strong>Microsoft Ignite 2025:</strong> Overview feature in Copilot Notebooks presented by CVP Sumit Chauhan at Microsoft Ignite 2025. Overview generates AI-powered summaries of all notebook references using advanced map-reduce techniques. As AI Tech Lead, I drove context engineering and AI evaluation, collaborating with developers and PMs to deliver this tier-1 feature. <a href="https://drive.google.com/file/d/174UrwnOniIxVYEq_rfAEgqLB0p68IQdK/view?usp=sharing">[Watch Ignite Presentation]</a></span>
-        </li>
-      </ul>
+      <div class="hero-copy">
+        <p class="eyebrow">ML Scientist at OpenAI</p>
+        <h1>
+          Hey, I'm <span class="text-gradient">Jackie</span><br>
+          I build <span class="text-gradient">revenue intelligence</span> and grounded AI systems
+        </h1>
+        <p class="hero-summary">
+          I’m an ML Scientist at OpenAI working on B2B revenue forecasting and strategic
+          modeling to better understand business demand, inform growth decisions, and turn noisy
+          signals into decision-ready insight. Alongside that work, I stay deeply invested in AI
+          systems design, evaluation, retrieval, and open-source tools that help people learn
+          faster, read research more effectively, and work more intelligently with data.
+        </p>
+
+        <div class="hero-toolbar">
+          <div class="hero-actions">
+            <a class="hero-button" href="{{ '/contact/' | relative_url }}">
+              <i class="fas fa-at" aria-hidden="true"></i>
+              Contact Me
+            </a>
+            <a class="hero-button" href="{{ '/projects/' | relative_url }}">
+              <i class="fas fa-grip-horizontal" aria-hidden="true"></i>
+              View Projects
+            </a>
+          </div>
+
+          <span class="hero-separator" aria-hidden="true"></span>
+
+          <div class="hero-socials" aria-label="Social links">
+            <a href="https://github.com/jackie-jiaqi-yin" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+            <a href="https://linkedin.com/in/jiaqiyin" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+            <a href="https://medium.com/@jiaqiyin1014" aria-label="Medium"><i class="fab fa-medium-m" aria-hidden="true"></i></a>
+          </div>
+        </div>
+
+        <p class="hero-footnote">
+          Previously, I worked across forecasting, experimentation, recommendation systems, and AI
+          product development at Microsoft, including context engineering and evaluation for Copilot
+          Notebooks. I also collaborate across health AI and aging-related work, and build
+          self-driven open-source tools such as codex-skills, ArxivSummary, and schema-lineage
+          tooling.
+        </p>
+
+        <a class="hero-inline-link" href="{{ '/about/' | relative_url }}">More about my background</a>
+      </div>
     </div>
-    <button type="button" class="news-slider-control down" aria-label="Scroll down">&#9660;</button>
   </div>
-  <p class="news-more-link">More updates are in the <a href="/news/">News</a> tab.</p>
-</div>
+</section>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    var sliders = document.querySelectorAll(".news-slider--vertical");
-    sliders.forEach(function (slider) {
-      var viewport = slider.querySelector(".news-slider-viewport");
-      var upButton = slider.querySelector(".news-slider-control.up");
-      var downButton = slider.querySelector(".news-slider-control.down");
+<section class="section-shell">
+  <div class="page-shell">
+    <div class="section-intro">
+      <p class="eyebrow">What I Work On</p>
+      <h2>Building impact across work and AI side projects.</h2>
+      <p>
+        My core role is business-critical machine learning. My side work stays broad, self-driven,
+        and deeply practical.
+      </p>
+    </div>
 
-      if (!viewport || !upButton || !downButton) {
-        return;
-      }
+    <div class="lane-grid">
+      <article class="lane-card">
+        <span class="lane-card__eyebrow">Work</span>
+        <h3>Revenue Forecasting & Strategic Modeling</h3>
+        <p>
+          I build B2B revenue forecasting and strategic models that help surface demand patterns,
+          sharpen planning, and connect machine learning work to concrete growth decisions.
+        </p>
+      </article>
 
-      function scrollStep() {
-        var firstItem = viewport.querySelector("li");
-        var itemHeight = firstItem ? firstItem.offsetHeight : viewport.clientHeight / 2;
-        return Math.max(80, itemHeight * 0.9);
-      }
+      <article class="lane-card">
+        <span class="lane-card__eyebrow">AI Product</span>
+        <h3>Applied AI Systems & Evaluation</h3>
+        <p>
+          I’ve worked end to end on AI product development, including context engineering, prompt
+          design, tool usage, and evaluation for grounded systems such as Microsoft Copilot
+          Notebooks.
+        </p>
+      </article>
 
-      function updateControlState() {
-        var atTop = viewport.scrollTop <= 2;
-        var atBottom = viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight - 2;
-        upButton.disabled = atTop;
-        downButton.disabled = atBottom;
-      }
+      <article class="lane-card">
+        <span class="lane-card__eyebrow">Self-Driven</span>
+        <h3>Open Source, Research Tools, and Data Workflows</h3>
+        <p>
+          I build open-source AI tooling and research-facing systems that help people synthesize
+          papers, mine data more effectively, and turn technical curiosity into useful software.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
 
-      upButton.addEventListener("click", function () {
-        viewport.scrollBy({ top: -scrollStep(), behavior: "smooth" });
-      });
+<section class="section-shell section-shell--bordered">
+  <div class="page-shell">
+    <div class="section-intro">
+      <p class="eyebrow">Recent News</p>
+      <h2>Recent milestones across work, research, and open source.</h2>
+      <p>
+        A quick snapshot of the latest updates. The full archive lives on the news page.
+      </p>
+    </div>
 
-      downButton.addEventListener("click", function () {
-        viewport.scrollBy({ top: scrollStep(), behavior: "smooth" });
-      });
+    <div class="updates-grid">
+      {% for item in site.data.news limit:4 %}
+        {% if item.url %}
+          <a class="update-card update-card--link" href="{{ item.url }}" data-preview-modal="news" data-preview-title="{{ item.title | escape }}" data-preview-summary="{{ item.summary | escape }}">
+            <span class="news-card__link-badge">Link</span>
+            <span class="update-card__date">{{ item.date_label }}</span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.summary }}</p>
+          </a>
+        {% else %}
+          <article class="update-card">
+            <span class="update-card__date">{{ item.date_label }}</span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.summary }}</p>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
 
-      viewport.addEventListener("scroll", updateControlState);
-      window.addEventListener("resize", updateControlState);
-      updateControlState();
-    });
-  });
-</script>
+    <a class="hero-inline-link" href="{{ '/news/' | relative_url }}">View all news</a>
+  </div>
+</section>
 
-<div class="welcome-section">
-  <h2>Welcome to My AI Playground ✨</h2>
+<section class="section-shell section-shell--bordered">
+  <div class="page-shell">
+    <div class="contact-band">
+      <div class="contact-band__copy">
+        <p class="eyebrow">Contact</p>
+        <h2>Interested in AI products, modeling, or research tooling?</h2>
+        <p>
+          I’m especially interested in work that connects technical rigor to real outcomes, whether
+          that means better revenue insight, stronger AI product behavior, or more useful open-source
+          systems.
+        </p>
+      </div>
 
-  <p>👋 Hi there! I'm Jackie Yin (殷佳祺 | Yīn Jiā-Qí), a Senior AI Scientist at Microsoft Copilot Notebooks with a passion for all things AI! I specialize in LLMs, agentic AI systems, and RAG optimization.</p>
-
-  <p>Currently at Copilot Notebooks, I'm responsible for end-to-end AI product development — from data curation to prompt engineering, tool calling, feature launch, and AI evaluation, delivering tier 1 AI features for Ignite.</p>
-  
-  <p>My AI journey began in 2024, but before jumping into the AI revolution, I worked on machine learning, recommendation systems, forecasting, and A/B experiments — leading end-to-end projects that helped launch successful products! Notably, as the sole scientist, I developed the algorithm for the <a href="https://learn.microsoft.com/en-us/dynamics365/customer-service/use/use-volume-forecasting">Dynamics 365 volume forecasting feature</a>. I'm a bit of a learning addict and love sharing what I discover along the way.</p>
-
-  <p>🌱 This digital garden is where I share:</p>
-  <ul>
-    <li>Technical insights from my adventures with advanced AI systems</li>
-    <li>Research findings and practical strategies for enterprise AI</li>
-    <li>Personal musings on emerging tech that fascinates me</li>
-    <li>Career advice for fellow travelers in the AI/ML landscape</li>
-  </ul>
-
-  <p>Whether you're an AI researcher, industry pro, or just curious about this exciting AI world, I hope you'll find something valuable here! Let's learn and grow together as I document my journey and discoveries. 🚀</p>
-
-  <a href="/about/" class="btn btn--info">Learn more about me</a>
-</div>
+      <div class="contact-band__actions">
+        <a class="hero-button" href="{{ '/contact/' | relative_url }}">Contact Me</a>
+        <a class="hero-button" href="{{ '/about/' | relative_url }}">About Me</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -3,12 +3,35 @@
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 
 <script>
+  (function () {
+    try {
+      var storedTheme = localStorage.getItem("jackie-theme");
+      if (storedTheme === "light") {
+        document.documentElement.classList.add("theme-light");
+      }
+    } catch (error) {}
+  })();
+</script>
+
+<script>
   document.addEventListener("DOMContentLoaded", function () {
+    var themeToggle = document.querySelector("[data-theme-toggle]");
+    var lastPreviewTrigger = null;
+    if (themeToggle) {
+      themeToggle.addEventListener("click", function () {
+        var isLight = document.documentElement.classList.toggle("theme-light");
+        try {
+          localStorage.setItem("jackie-theme", isLight ? "light" : "dark");
+        } catch (error) {}
+      });
+    }
+
     var links = document.querySelectorAll("a[href]");
 
     links.forEach(function (link) {
       var href = link.getAttribute("href");
       if (!href) return;
+      if (link.hasAttribute("data-preview-modal")) return;
 
       if (
         href.charAt(0) === "#" ||
@@ -37,6 +60,152 @@
       if (!relValues.includes("noreferrer")) relValues.push("noreferrer");
       link.setAttribute("rel", relValues.join(" "));
     });
+
+    var navLinks = document.querySelectorAll(".visible-links a[href]");
+    var currentPath = window.location.pathname.replace(/index\.html$/, "");
+
+    if (currentPath.length > 1 && currentPath.endsWith("/")) {
+      currentPath = currentPath.slice(0, -1);
+    }
+
+    var currentSection = currentPath.split("/").filter(Boolean)[0] || "";
+
+    navLinks.forEach(function (link) {
+      var linkPath;
+
+      try {
+        linkPath = new URL(link.href, window.location.href).pathname.replace(/index\.html$/, "");
+      } catch (error) {
+        return;
+      }
+
+      if (linkPath.length > 1 && linkPath.endsWith("/")) {
+        linkPath = linkPath.slice(0, -1);
+      }
+
+      var linkSection = linkPath.split("/").filter(Boolean)[0] || "";
+      var isActive = linkSection ? currentSection === linkSection : currentPath === "";
+      link.classList.toggle("is-active", isActive);
+    });
+
+    function getPreviewUrl(sourceUrl) {
+      if (!sourceUrl) return "";
+
+      try {
+        var parsed = new URL(sourceUrl, window.location.href);
+
+        if (parsed.hostname === "drive.google.com") {
+          var driveMatch = parsed.pathname.match(/\/file\/d\/([^/]+)/);
+          if (driveMatch && driveMatch[1]) {
+            return "https://drive.google.com/file/d/" + driveMatch[1] + "/preview";
+          }
+        }
+
+        if (parsed.origin === window.location.origin || parsed.hostname === "jackie-jiaqi-yin.github.io") {
+          return parsed.href;
+        }
+      } catch (error) {
+        return "";
+      }
+
+      return "";
+    }
+
+    var previewDialog = document.querySelector("[data-preview-dialog]");
+    var previewFrame = document.querySelector("[data-preview-frame]");
+    var previewTitle = document.querySelector("[data-preview-title]");
+    var previewSummary = document.querySelector("[data-preview-summary]");
+    var previewOrigin = document.querySelector("[data-preview-origin]");
+    var previewFallback = document.querySelector("[data-preview-fallback]");
+    var previewSourceLink = document.querySelector("[data-preview-open-source]");
+    var previewCloseButton = previewDialog ? previewDialog.querySelector(".preview-modal__close") : null;
+
+    function closePreviewDialog() {
+      if (!previewDialog) return;
+
+      previewDialog.hidden = true;
+      previewDialog.setAttribute("aria-hidden", "true");
+      document.documentElement.classList.remove("preview-modal-open");
+      document.body.classList.remove("preview-modal-open");
+
+      if (previewFrame) {
+        previewFrame.setAttribute("src", "about:blank");
+      }
+
+      if (lastPreviewTrigger) {
+        lastPreviewTrigger.focus();
+        lastPreviewTrigger = null;
+      }
+    }
+
+    function openPreviewDialog(link) {
+      if (!previewDialog || !previewTitle || !previewSummary) return;
+
+      var sourceUrl = link.getAttribute("href");
+      var title = link.getAttribute("data-preview-title") || link.textContent.trim();
+      var summary = link.getAttribute("data-preview-summary") || "";
+      var previewUrl = link.getAttribute("data-preview-url") || getPreviewUrl(sourceUrl);
+      var canEmbed = Boolean(previewUrl);
+      var origin = "";
+
+      try {
+        origin = sourceUrl ? new URL(sourceUrl, window.location.href).hostname : "";
+      } catch (error) {
+        origin = "";
+      }
+
+      previewTitle.textContent = title;
+      previewSummary.textContent = summary;
+      if (previewOrigin) {
+        previewOrigin.textContent = origin ? "Source: " + origin : "Inline preview";
+      }
+      if (previewSourceLink) {
+        previewSourceLink.setAttribute("href", sourceUrl || "#");
+        previewSourceLink.hidden = !sourceUrl;
+      }
+
+      if (previewFrame) {
+        previewFrame.hidden = !canEmbed;
+        previewFrame.setAttribute("src", canEmbed ? previewUrl : "about:blank");
+      }
+
+      if (previewFallback) {
+        previewFallback.hidden = canEmbed;
+      }
+
+      previewDialog.hidden = false;
+      previewDialog.setAttribute("aria-hidden", "false");
+      document.documentElement.classList.add("preview-modal-open");
+      document.body.classList.add("preview-modal-open");
+
+      if (previewCloseButton) {
+        previewCloseButton.focus();
+      }
+    }
+
+    document.querySelectorAll("[data-preview-modal]").forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        if (event.defaultPrevented) return;
+        if (event.button !== 0) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+        event.preventDefault();
+        lastPreviewTrigger = link;
+        openPreviewDialog(link);
+      });
+    });
+
+    if (previewDialog) {
+      previewDialog.querySelectorAll("[data-preview-close]").forEach(function (element) {
+        element.addEventListener("click", closePreviewDialog);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && !previewDialog.hidden) {
+          closePreviewDialog();
+        }
+      });
+    }
   });
 </script>
 

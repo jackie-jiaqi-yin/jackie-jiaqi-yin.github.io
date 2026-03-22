@@ -12,26 +12,26 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 remote_theme           : "mmistakes/minimal-mistakes@4.24.0"
-minimal_mistakes_skin    : "mint" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "en-US"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Jackie's AI Playground"
+title                    : "Jackie Jiaqi Yin"
 title_separator          : "-"
-subtitle                 : "Exploring AI Research and Creative Projects"  # site tagline that appears below site title in masthead
-name                     : "Jackie's AI Playground"
-description              : "Jackie's AI Playground is a dynamic hub where applied AI science meets creative experimentation. Explore cutting-edge research in LLMs, Reinforcement learning finetune, RAG systems, and multi-agent frameworks alongside innovative personal projects that showcase practical applications of AI technology. Discover insights from my professional journey at Microsoft, follow along with my current studies in Computer Science, and read career advice for those entering the AI field. This site offers valuable resources and personal experiences for AI enthusiasts, researchers, and industry professionals seeking inspiration at the intersection of theory and practice."
+subtitle                 :
+name                     : "Jackie Jiaqi Yin"
+description              : "ML Scientist at OpenAI working on B2B revenue forecasting, strategic modeling, and grounded AI systems. Explore projects in machine learning, AI tooling, research workflows, and open-source infrastructure."
 url                      : "https://jackie-jiaqi-yin.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "jackie-jiaqi-yin/jackie-jiaqi-yin.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
-breadcrumbs              : true # true, false (default)
+masthead_title           : "Jackie Yin" # overrides the website title displayed in the masthead, use " " for no title
+breadcrumbs              : false # true, false (default)
 words_per_minute         : 200
 enable_copy_code_button  : true # true, false (default)
-copyright                : "© 2025 Jackie Jiaqi Yin" # "copyright" name, defaults to site.title
+copyright                : "© 2026 Jackie Jiaqi Yin" # "copyright" name, defaults to site.title
 copyright_url            : # "copyright" URL, defaults to site.url
 comments:
   provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
@@ -68,7 +68,7 @@ reCaptcha:
 atom_feed:
   path                   : # blank (default) uses feed.xml
   hide                   : true # true, false (default)
-search                   : true # true, false (default)
+search                   : false # true, false (default)
 search_full_content      : true # true, false (default)
 search_provider          : lunr # lunr (default), algolia, google
 lunr:
@@ -107,6 +107,25 @@ social:
     - "https://medium.com/@jiaqiyin1014"
     - "https://jackie-jiaqi-yin.github.io"
 
+seo_person:
+  alternate_names:
+    - "Jackie Yin"
+    - "Jiaqi Yin"
+    - "殷佳祺"
+  job_title: "ML Scientist"
+  works_for: "OpenAI"
+  knows_about:
+    - "B2B revenue forecasting"
+    - "strategic modeling"
+    - "grounded AI systems"
+    - "LLM evaluation"
+    - "retrieval-augmented generation"
+    - "recommendation systems"
+  alumni_of:
+    - "Georgia Institute of Technology"
+    - "University of Washington"
+    - "Shanghai Jiao Tong University"
+
 # Analytics
 analytics:
   provider               : "custom" # false (default), "google", "google-universal", "google-gtag", "custom"
@@ -119,13 +138,13 @@ analytics:
 author:
   name             : "Jackie Jiaqi Yin"
   avatar           : "/assets/images/profile.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Applied Scientist 🤖 AI & ML & Stats 💻 Coder  🧠 Lifelong Learner"
-  location         : "Seattle, WA"
+  bio              : "ML Scientist focused on B2B revenue forecasting, strategic modeling, and grounded AI systems."
+  location         : "San Francisco, CA"
   email            : # optional
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:[jiaqiyin@yahoo.com]"
+      url: "mailto:jiaqiyin@yahoo.com"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://linkedin.com/in/jiaqiyin"
@@ -145,24 +164,15 @@ author:
 # Site Footer
 footer:
   links:
-    # - label: "Twitter"
-    #   icon: "fab fa-fw fa-twitter-square"
-    #   url:
-    # - label: "Facebook"
-    #   icon: "fab fa-fw fa-facebook-square"
-    #   url:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/jackie-jiaqi-yin"
-    # - label: "GitLab"
-    #   icon: "fab fa-fw fa-gitlab"
-    #   # url:
-    # - label: "Bitbucket"
-    #   icon: "fab fa-fw fa-bitbucket"
-    #   # url:
-    # - label: "Instagram"
-    #   icon: "fab fa-fw fa-instagram"
-    #   # url:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://linkedin.com/in/jiaqiyin"
+    - label: "Medium"
+      icon: "fab fa-fw fa-medium"
+      url: "https://medium.com/@jiaqiyin1014"
 
 
 # Reading Files
@@ -260,6 +270,12 @@ pagination:
     after: 2
 
 
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+
 # Plugins (previously gems:)
 plugins:
   - jekyll-paginate
@@ -328,3 +344,11 @@ defaults:
       share: true
       related: true
       show_date: true # show date on posts
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project-detail
+      author_profile: false
+      classes:
+        - project-detail-page
