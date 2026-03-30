@@ -261,6 +261,82 @@
         }
       });
     }
+
+    document.querySelectorAll("[data-project-carousel-root]").forEach(function (carouselRoot) {
+      var slides = Array.prototype.slice.call(
+        carouselRoot.querySelectorAll("[data-project-carousel-slide]")
+      );
+      var carouselFrame = carouselRoot.closest(".project-demo-frame");
+      var controls = carouselFrame
+        ? Array.prototype.slice.call(
+            carouselFrame.querySelectorAll("[data-project-carousel-dot]")
+          )
+        : [];
+      var interval = Number(carouselRoot.getAttribute("data-carousel-interval")) || 5000;
+      var currentIndex = 0;
+      var timerId = null;
+
+      if (slides.length <= 1) return;
+
+      function setActiveSlide(nextIndex) {
+        var normalizedIndex = ((nextIndex % slides.length) + slides.length) % slides.length;
+        currentIndex = normalizedIndex;
+
+        slides.forEach(function (slide, index) {
+          var isActive = index === normalizedIndex;
+          slide.classList.toggle("is-active", isActive);
+          slide.hidden = !isActive;
+        });
+
+        controls.forEach(function (dot, index) {
+          var isActive = index === normalizedIndex;
+          dot.classList.toggle("is-active", isActive);
+          dot.setAttribute("aria-current", isActive ? "true" : "false");
+        });
+      }
+
+      function stopAutoRotate() {
+        if (!timerId) return;
+        window.clearInterval(timerId);
+        timerId = null;
+      }
+
+      function startAutoRotate() {
+        stopAutoRotate();
+        timerId = window.setInterval(function () {
+          setActiveSlide(currentIndex + 1);
+        }, interval);
+      }
+
+      controls.forEach(function (dot) {
+        dot.addEventListener("click", function () {
+          var dotIndex = Number(dot.getAttribute("data-project-carousel-index"));
+          if (!Number.isFinite(dotIndex)) return;
+          setActiveSlide(dotIndex);
+          startAutoRotate();
+        });
+      });
+
+      carouselRoot.addEventListener("mouseenter", stopAutoRotate);
+      carouselRoot.addEventListener("mouseleave", startAutoRotate);
+      carouselRoot.addEventListener("focusin", stopAutoRotate);
+      carouselRoot.addEventListener("focusout", function (event) {
+        if (!carouselRoot.contains(event.relatedTarget)) {
+          startAutoRotate();
+        }
+      });
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "hidden") {
+          stopAutoRotate();
+        } else {
+          startAutoRotate();
+        }
+      });
+
+      setActiveSlide(0);
+      startAutoRotate();
+    });
   });
 </script>
 
