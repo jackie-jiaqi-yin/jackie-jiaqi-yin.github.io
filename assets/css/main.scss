@@ -551,6 +551,34 @@ html.theme-light .detail-card {
   color: inherit;
 }
 
+.preview-card,
+.preview-card:visited,
+.preview-card:hover,
+.preview-card:focus,
+.preview-card:focus-visible,
+.showcase-card,
+.showcase-card:visited,
+.showcase-card:hover,
+.showcase-card:focus,
+.showcase-card:focus-visible,
+.update-card--link,
+.update-card--link:visited,
+.update-card--link:hover,
+.update-card--link:focus,
+.update-card--link:focus-visible,
+.news-card--link,
+.news-card--link:visited,
+.news-card--link:hover,
+.news-card--link:focus,
+.news-card--link:focus-visible {
+  color: inherit;
+}
+
+.update-card h3,
+.news-card h2 {
+  color: var(--text-primary);
+}
+
 .preview-grid,
 .showcase-grid {
   display: grid;
