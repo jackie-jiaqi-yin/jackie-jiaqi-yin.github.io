@@ -3,6 +3,11 @@ layout: default
 ---
 
 {% assign project_content = content | strip %}
+{% assign demo_gallery = page.demo_gallery %}
+{% assign demo_gallery_count = 0 %}
+{% if demo_gallery %}
+  {% assign demo_gallery_count = demo_gallery | size %}
+{% endif %}
 
 <section class="project-detail-shell">
   <div class="page-shell">
@@ -13,9 +18,34 @@ layout: default
 
     <div class="project-detail">
       <div class="project-detail__media">
+        {% assign gallery_images = page.gallery_images %}
+        {% assign gallery_count = 0 %}
+        {% if gallery_images %}
+          {% assign gallery_count = gallery_images | size %}
+        {% endif %}
         <div class="project-demo-frame">
           <div class="project-demo-frame__inner">
-            {% if page.card_image %}
+            {% if gallery_count > 0 %}
+              <div class="project-carousel" data-project-carousel-root data-carousel-interval="5000">
+                {% for image in gallery_images %}
+                  <figure
+                    class="project-carousel__slide{% if forloop.first %} is-active{% endif %}"
+                    data-project-carousel-slide
+                    {% unless forloop.first %}hidden{% endunless %}
+                  >
+                    {% if image.badge %}
+                      <figcaption class="project-carousel__badge">
+                        <strong>{{ image.badge }}</strong>
+                        {% if image.badge_note %}
+                          <span>{{ image.badge_note }}</span>
+                        {% endif %}
+                      </figcaption>
+                    {% endif %}
+                    <img src="{{ image.src | relative_url }}" alt="{{ image.alt | default: page.image_alt | default: page.title }}">
+                  </figure>
+                {% endfor %}
+              </div>
+            {% elsif page.card_image %}
               <img src="{{ page.card_image | relative_url }}" alt="{{ page.image_alt | default: page.title }}">
             {% else %}
               <div class="project-demo-frame__placeholder">
@@ -23,6 +53,21 @@ layout: default
               </div>
             {% endif %}
           </div>
+
+          {% if gallery_count > 1 %}
+            <div class="project-carousel__controls" role="tablist" aria-label="{{ page.title }} image gallery">
+              {% for image in gallery_images %}
+                <button
+                  class="project-carousel__dot{% if forloop.first %} is-active{% endif %}"
+                  type="button"
+                  data-project-carousel-dot
+                  data-project-carousel-index="{{ forloop.index0 }}"
+                  aria-label="Show image {{ forloop.index }}"
+                  aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                ></button>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
 
       </div>
@@ -61,25 +106,41 @@ layout: default
               {% for link in page.links %}
                 {% assign action_url = link.url %}
                 {% assign is_external = false %}
+                {% assign is_anchor = false %}
+                {% assign link_start = link.url | slice: 0, 1 %}
+                {% if link_start == '#' %}
+                  {% assign is_anchor = true %}
+                {% endif %}
                 {% if link.url contains '://' %}
                   {% assign is_external = true %}
-                {% else %}
+                {% elsif is_anchor == false %}
                   {% assign action_url = link.url | relative_url %}
                 {% endif %}
-                <a
-                  class="project-action"
-                  href="{{ action_url }}"
-                  data-preview-modal="project"
-                  data-preview-title="{{ page.title | escape }}: {{ link.label | escape }}"
-                  data-preview-summary="{{ page.summary | escape }}"
-                >
-                  {% if link.icon %}
-                    <i class="{{ link.icon }}" aria-hidden="true"></i>
-                  {% else %}
-                    <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                  {% endif %}
-                  {{ link.label }}
-                </a>
+                {% if is_anchor %}
+                  <a class="project-action" href="{{ action_url }}">
+                    {% if link.icon %}
+                      <i class="{{ link.icon }}" aria-hidden="true"></i>
+                    {% else %}
+                      <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    {% endif %}
+                    {{ link.label }}
+                  </a>
+                {% else %}
+                  <a
+                    class="project-action"
+                    href="{{ action_url }}"
+                    data-preview-modal="project"
+                    data-preview-title="{{ page.title | escape }}: {{ link.label | escape }}"
+                    data-preview-summary="{{ page.summary | escape }}"
+                  >
+                    {% if link.icon %}
+                      <i class="{{ link.icon }}" aria-hidden="true"></i>
+                    {% else %}
+                      <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    {% endif %}
+                    {{ link.label }}
+                  </a>
+                {% endif %}
               {% endfor %}
             </div>
           </section>
@@ -91,6 +152,55 @@ layout: default
       <div class="project-detail__content">
         {{ content }}
       </div>
+    {% endif %}
+
+    {% if demo_gallery_count > 0 %}
+      <section class="project-output-gallery" id="project-gallery">
+        <div class="section-intro section-intro--row">
+          <div>
+            <p class="eyebrow">Gallery</p>
+            <h2>Skill Output Previews</h2>
+            <p>Preview example outputs generated by individual skills.</p>
+          </div>
+        </div>
+        <div class="project-output-gallery__grid">
+          {% for demo in demo_gallery %}
+            {% assign demo_url = demo.url %}
+            {% if demo.url contains '://' %}
+              {% assign demo_is_external = true %}
+            {% else %}
+              {% assign demo_is_external = false %}
+              {% assign demo_url = demo.url | relative_url %}
+            {% endif %}
+            <a
+              class="project-output-card"
+              href="{{ demo_url }}"
+              data-preview-modal="project"
+              data-preview-title="{{ page.title | escape }}: {{ demo.title | escape }}"
+              data-preview-summary="{{ demo.summary | default: page.summary | escape }}"
+            >
+              <div class="project-output-card__media">
+                {% if demo.thumbnail %}
+                  <img src="{{ demo.thumbnail | relative_url }}" alt="{{ demo.title | escape }}">
+                {% else %}
+                  <div class="project-output-card__placeholder">Output preview</div>
+                {% endif %}
+              </div>
+              <div class="project-output-card__body">
+                <h3>{{ demo.title }}</h3>
+                <p>{{ demo.summary }}</p>
+                <span class="project-output-card__cta">
+                  {% if demo_is_external %}
+                    Open external output
+                  {% else %}
+                    Preview output
+                  {% endif %}
+                </span>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </section>
     {% endif %}
   </div>
 </section>
