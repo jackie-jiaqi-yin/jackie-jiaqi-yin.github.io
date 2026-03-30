@@ -17,6 +17,57 @@
   document.addEventListener("DOMContentLoaded", function () {
     var themeToggle = document.querySelector("[data-theme-toggle]");
     var lastPreviewTrigger = null;
+    var shouldRestorePreviewFocus = false;
+    var cardLinkSelector = ".news-card--link, .update-card--link, .showcase-card";
+    var cardFocusResetKey = "jackie-reset-card-focus";
+
+    function rememberCardFocusReset() {
+      try {
+        sessionStorage.setItem(cardFocusResetKey, "1");
+      } catch (error) {}
+    }
+
+    function clearRestoredCardFocus() {
+      var shouldClear = false;
+
+      try {
+        shouldClear = sessionStorage.getItem(cardFocusResetKey) === "1";
+      } catch (error) {}
+
+      if (!shouldClear) return;
+
+      if (
+        document.activeElement &&
+        typeof document.activeElement.matches === "function" &&
+        document.activeElement.matches(cardLinkSelector)
+      ) {
+        document.activeElement.blur();
+      }
+
+      try {
+        sessionStorage.removeItem(cardFocusResetKey);
+      } catch (error) {}
+    }
+
+    window.addEventListener("pageshow", function () {
+      window.requestAnimationFrame(clearRestoredCardFocus);
+    });
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState !== "visible") return;
+      window.requestAnimationFrame(clearRestoredCardFocus);
+    });
+
+    document.querySelectorAll(cardLinkSelector).forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        if (event.defaultPrevented) return;
+        if (event.button !== 0) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+        rememberCardFocusReset();
+      });
+    });
+
     if (themeToggle) {
       themeToggle.addEventListener("click", function () {
         var isLight = document.documentElement.classList.toggle("theme-light");
@@ -112,12 +163,12 @@
     }
 
     var previewDialog = document.querySelector("[data-preview-dialog]");
-    var previewFrame = document.querySelector("[data-preview-frame]");
-    var previewTitle = document.querySelector("[data-preview-title]");
-    var previewSummary = document.querySelector("[data-preview-summary]");
-    var previewOrigin = document.querySelector("[data-preview-origin]");
-    var previewFallback = document.querySelector("[data-preview-fallback]");
-    var previewSourceLink = document.querySelector("[data-preview-open-source]");
+    var previewFrame = previewDialog ? previewDialog.querySelector("[data-preview-frame]") : null;
+    var previewTitle = previewDialog ? previewDialog.querySelector("[data-preview-title]") : null;
+    var previewSummary = previewDialog ? previewDialog.querySelector("[data-preview-summary]") : null;
+    var previewOrigin = previewDialog ? previewDialog.querySelector("[data-preview-origin]") : null;
+    var previewFallback = previewDialog ? previewDialog.querySelector("[data-preview-fallback]") : null;
+    var previewSourceLink = previewDialog ? previewDialog.querySelector("[data-preview-open-source]") : null;
     var previewCloseButton = previewDialog ? previewDialog.querySelector(".preview-modal__close") : null;
 
     function closePreviewDialog() {
@@ -133,8 +184,11 @@
       }
 
       if (lastPreviewTrigger) {
-        lastPreviewTrigger.focus();
+        if (shouldRestorePreviewFocus) {
+          lastPreviewTrigger.focus();
+        }
         lastPreviewTrigger = null;
+        shouldRestorePreviewFocus = false;
       }
     }
 
@@ -191,6 +245,7 @@
 
         event.preventDefault();
         lastPreviewTrigger = link;
+        shouldRestorePreviewFocus = event.detail === 0;
         openPreviewDialog(link);
       });
     });
