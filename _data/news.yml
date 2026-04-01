@@ -1,4 +1,9 @@
 - date_label: "March 2026"
+  title: "Talk at UCSF Biostatistics Lab"
+  summary: "Had a discussion with the UCSF Biostatistics lab on how research training carries into AI-native work, including problem formulation, validation, and the role of human judgment in real data and modeling workflows."
+  url: "/assets/demos/ucsf-talk/"
+
+- date_label: "March 2026"
   title: "Codex Skills Series Launched"
   summary: "Launched a new codex-skills series with reusable, installable workflows for data mining, modeling, AI, and research workflows, making capabilities easier to reuse across projects with less setup overhead."
   url: "https://github.com/jackie-jiaqi-yin/codex-skills"

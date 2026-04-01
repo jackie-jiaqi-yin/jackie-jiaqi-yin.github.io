@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>From Research Training to AI-Native Work</title>
+    <style>
+      :root {
+        --bg: #f5f1ea;
+        --bg-soft: #fbf8f3;
+        --surface: rgba(255, 255, 255, 0.82);
+        --surface-strong: rgba(255, 255, 255, 0.94);
+        --surface-tint: rgba(250, 248, 243, 0.92);
+        --text: #171b24;
+        --muted: #5a6472;
+        --soft: #7d8794;
+        --line: rgba(23, 27, 36, 0.08);
+        --line-strong: rgba(23, 27, 36, 0.16);
+        --blue: #2563eb;
+        --teal: #14b8a6;
+        --violet: #6366f1;
+        --orange: #f97316;
+        --rose: #ef4444;
+        --gradient-ai: linear-gradient(120deg, #2563eb 0%, #6366f1 52%, #14b8a6 100%);
+        --gradient-soft: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(99, 102, 241, 0.08) 52%, rgba(20, 184, 166, 0.08));
+        --shadow-stage: 0 28px 90px rgba(54, 45, 31, 0.14);
+        --shadow-card: 0 16px 40px rgba(54, 45, 31, 0.1);
+        --radius-xl: 34px;
+        --radius-lg: 26px;
+        --radius-md: 20px;
+        --radius-sm: 15px;
+        --topbar-h: 76px;
+        --slide-w: 1280px;
+        --slide-h: 720px;
+        --deck-gap: 28px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 8% 8%, rgba(37, 99, 235, 0.12), transparent 24%),
+          radial-gradient(circle at 92% 16%, rgba(99, 102, 241, 0.1), transparent 28%),
+          radial-gradient(circle at 88% 84%, rgba(20, 184, 166, 0.08), transparent 22%),
+          linear-gradient(180deg, #f9f6f0 0%, #f1ece3 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background-image:
+          linear-gradient(var(--line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        background-size: 42px 42px;
+        opacity: 0.42;
+        pointer-events: none;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        height: var(--topbar-h);
+        backdrop-filter: blur(18px);
+        background: rgba(250, 247, 241, 0.84);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .topbar-inner {
+        width: min(1500px, calc(100% - 1.5rem));
+        height: 100%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.85rem;
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+      }
+
+      .brand::before {
+        content: "";
+        width: 0.92rem;
+        height: 0.92rem;
+        border-radius: 50%;
+        background: var(--gradient-ai);
+        box-shadow: 0 0 22px rgba(14, 165, 233, 0.22);
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.55rem;
+      }
+
+      .nav a,
+      .notes-toggle {
+        padding: 0.56rem 0.9rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.56);
+        color: var(--muted);
+        font: inherit;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+      }
+
+      .nav a:hover,
+      .notes-toggle:hover {
+        color: var(--text);
+        border-color: rgba(14, 165, 233, 0.28);
+        transform: translateY(-1px);
+      }
+
+      .deck {
+        padding: 24px 24px 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--deck-gap);
+        scroll-snap-type: y proximity;
+      }
+
+      .slide {
+        width: var(--slide-w);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.9rem;
+        scroll-snap-align: start;
+        scroll-margin-top: calc(var(--topbar-h) + 24px);
+      }
+
+      .stage {
+        position: relative;
+        width: var(--slide-w);
+        height: var(--slide-h);
+        overflow: hidden;
+        border-radius: var(--radius-xl);
+        border: 1px solid rgba(255, 255, 255, 0.58);
+        background:
+          radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 22%),
+          radial-gradient(circle at top right, rgba(99, 102, 241, 0.07), transparent 26%),
+          radial-gradient(circle at bottom right, rgba(20, 184, 166, 0.06), transparent 22%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 241, 0.9));
+        box-shadow: var(--shadow-stage);
+      }
+
+      .stage::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(var(--line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        background-size: 38px 38px;
+        opacity: 0.34;
+        pointer-events: none;
+      }
+
+      .stage::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 20% 16%, rgba(37, 99, 235, 0.08), transparent 22%),
+          radial-gradient(circle at 80% 18%, rgba(99, 102, 241, 0.08), transparent 24%),
+          radial-gradient(circle at 82% 84%, rgba(20, 184, 166, 0.07), transparent 20%);
+        mix-blend-mode: multiply;
+      }
+
+      .stage-inner {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        padding: 52px 58px 48px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .slide.compact .stage-inner {
+        padding: 44px 48px 42px;
+        gap: 12px;
+      }
+
+      .topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        width: fit-content;
+        padding: 0.5rem 0.88rem;
+        border-radius: 999px;
+        border: 1px solid rgba(14, 165, 233, 0.28);
+        background: rgba(255, 255, 255, 0.58);
+        color: #26506a;
+        font-size: 0.83rem;
+        font-weight: 900;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: var(--gradient-ai);
+      }
+
+      .stage-index {
+        color: var(--soft);
+        font-size: 0.9rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      p {
+        margin: 0;
+      }
+
+      .title {
+        max-width: 12.5ch;
+        font-size: 3.75rem;
+        line-height: 0.94;
+        letter-spacing: -0.07em;
+        font-weight: 900;
+      }
+
+      .title.compact {
+        max-width: 13.5ch;
+        font-size: 3.2rem;
+        line-height: 0.96;
+        letter-spacing: -0.06em;
+      }
+
+      .title.gradient,
+      .card-title.gradient {
+        background: var(--gradient-ai);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .title .accent {
+        background: var(--gradient-ai);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .subtitle {
+        max-width: 45rem;
+        color: var(--muted);
+        font-size: 1.25rem;
+        line-height: 1.28;
+      }
+
+      .subtitle.compact {
+        max-width: 40rem;
+        font-size: 1.05rem;
+        line-height: 1.26;
+      }
+
+      .card {
+        position: relative;
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(255, 255, 255, 0.64);
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: var(--shadow-card);
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 100%;
+        height: 4px;
+        background: var(--gradient-ai);
+        opacity: 0.78;
+      }
+
+      .soft-card {
+        background: rgba(255, 255, 255, 0.6);
+      }
+
+      .hero-layout,
+      .split-layout,
+      .compare-layout,
+      .workflow-layout,
+      .parallel-layout,
+      .validation-layout,
+      .takeaway-layout {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .hero-layout,
+      .split-layout,
+      .compare-layout,
+      .parallel-layout,
+      .validation-layout,
+      .takeaway-layout {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .workflow-layout {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: 1fr;
+      }
+
+      .hero-title {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .opening-shell {
+        display: flex;
+        flex: 1;
+        align-items: center;
+      }
+
+      .opening-copy {
+        max-width: 62rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+
+      .opening-meta {
+        color: var(--soft);
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .hero-quote,
+      .info-stack,
+      .panel,
+      .workflow-card,
+      .column-card,
+      .validation-sidebar,
+      .takeaway-card,
+      .closing-card {
+        height: 100%;
+      }
+
+      .hero-quote {
+        padding: 1.3rem 1.35rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 0.8rem;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(250, 247, 241, 0.86)),
+          var(--gradient-soft);
+      }
+
+      blockquote {
+        margin: 0;
+        font-size: 1.65rem;
+        line-height: 1.12;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+      }
+
+      #slide-0 .stage-inner {
+        padding: 74px 82px 72px;
+        justify-content: center;
+      }
+
+      #slide-0 .title {
+        max-width: 11.3ch;
+        font-size: 4.5rem;
+        line-height: 0.92;
+        letter-spacing: -0.08em;
+      }
+
+      #slide-0 .subtitle {
+        max-width: 47.5rem;
+        font-size: 1.5rem;
+      }
+
+      #slide-0 .hero-quote {
+        max-width: 930px;
+        padding: 28px 30px;
+      }
+
+      #slide-0 blockquote {
+        font-size: 2.125rem;
+      }
+
+      .small-note {
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      .info-stack {
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      .mini-card,
+      .timeline-card,
+      .workflow-card,
+      .step-card,
+      .agent,
+      .compare-callout,
+      .takeaway-callout,
+      .question-card {
+        position: relative;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--line);
+        background: var(--surface-strong);
+      }
+
+      .mini-card::after,
+      .timeline-card::after,
+      .workflow-card::after,
+      .step-card::after,
+      .agent::after,
+      .compare-callout::after,
+      .takeaway-callout::after,
+      .question-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.22), rgba(99, 102, 241, 0.12), rgba(20, 184, 166, 0.16));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+
+      .mini-card,
+      .panel,
+      .workflow-card,
+      .column-card,
+      .validation-sidebar,
+      .takeaway-card,
+      .closing-card,
+      .question-card {
+        padding: 0.98rem 1rem;
+      }
+
+      .label {
+        color: var(--soft);
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .mini-card p,
+      .panel p,
+      .workflow-card p,
+      .column-card p,
+      .validation-sidebar p,
+      .takeaway-card p,
+      .closing-card p,
+      .question-card p {
+        color: var(--muted);
+      }
+
+      .timeline-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.9rem;
+        flex: 1;
+      }
+
+      .timeline-card {
+        padding: 1rem 1.05rem;
+        min-height: 100%;
+      }
+
+      .timeline-card:nth-child(1) { background: linear-gradient(180deg, rgba(225, 244, 254, 0.96), rgba(255, 255, 255, 0.86)); }
+      .timeline-card:nth-child(2) { background: linear-gradient(180deg, rgba(225, 251, 244, 0.96), rgba(255, 255, 255, 0.86)); }
+      .timeline-card:nth-child(3) { background: linear-gradient(180deg, rgba(239, 232, 255, 0.96), rgba(255, 255, 255, 0.86)); }
+      .timeline-card:nth-child(4) { background: linear-gradient(180deg, rgba(255, 238, 227, 0.96), rgba(255, 255, 255, 0.86)); }
+
+      .year {
+        display: inline-block;
+        padding: 0.26rem 0.58rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.6);
+        font-size: 0.74rem;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .card-title {
+        margin-top: 0.5rem;
+        font-size: 1.7rem;
+        line-height: 1;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+      }
+
+      .panel {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .panel h3,
+      .workflow-card h3,
+      .column-card h3,
+      .takeaway-card h3,
+      .closing-card h3,
+      .question-card h3 {
+        margin-top: 0.25rem;
+        font-size: 1.8rem;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+      }
+
+      .panel ul,
+      .workflow-card ul,
+      .takeaway-card ul,
+      .validation-sidebar ul,
+      .question-list,
+      .case-points {
+        margin: 0;
+        padding-left: 1.05rem;
+        color: var(--muted);
+        font-size: 0.96rem;
+        line-height: 1.32;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+      }
+
+      .chip {
+        padding: 0.5rem 0.78rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.62);
+        font-size: 0.92rem;
+        font-weight: 800;
+        color: var(--text);
+      }
+
+      .workflow-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        min-height: 0;
+      }
+
+      .workflow-card.blue { background: linear-gradient(180deg, rgba(228, 244, 255, 0.94), rgba(255, 255, 255, 0.84)); }
+      .workflow-card.teal { background: linear-gradient(180deg, rgba(230, 250, 244, 0.94), rgba(255, 255, 255, 0.84)); }
+      .workflow-card.violet { background: linear-gradient(180deg, rgba(241, 236, 255, 0.94), rgba(255, 255, 255, 0.84)); }
+      .workflow-card.orange { background: linear-gradient(180deg, rgba(255, 239, 229, 0.94), rgba(255, 255, 255, 0.84)); }
+
+      .sub-label {
+        color: var(--text);
+        font-size: 0.9rem;
+        font-weight: 900;
+      }
+
+      .callout-band {
+        padding: 0.82rem 1rem;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(37, 99, 235, 0.12);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.92));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        font-size: 0.98rem;
+        font-weight: 800;
+        line-height: 1.28;
+        position: relative;
+      }
+
+      .callout-band::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 7px;
+        border-radius: var(--radius-md) 0 0 var(--radius-md);
+        background: var(--gradient-ai);
+      }
+
+      .column-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+      }
+
+      .step-stack {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .step-card {
+        padding: 0.82rem 0.92rem;
+        font-size: 0.96rem;
+        font-weight: 800;
+      }
+
+      .step-card + .step-card {
+        margin-top: 0.1rem;
+      }
+
+      .down {
+        display: flex;
+        justify-content: center;
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: var(--blue);
+      }
+
+      .agent-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.7rem;
+      }
+
+      .agent {
+        padding: 0.78rem 0.82rem;
+        min-height: 112px;
+      }
+
+      .agent strong,
+      .case-card strong {
+        display: inline-block;
+        margin-bottom: 0.45rem;
+        font-size: 0.74rem;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--soft);
+      }
+
+      .agent h4 {
+        margin: 0;
+        font-size: 1.32rem;
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+      }
+
+      .compare-callout,
+      .takeaway-callout {
+        padding: 0.88rem 0.94rem;
+      }
+
+      .compare-callout p,
+      .takeaway-callout p {
+        font-size: 1.28rem;
+        font-weight: 900;
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+      }
+
+      .validation-layout {
+        align-items: stretch;
+      }
+
+      .validation-stack {
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      .funnel-step {
+        position: relative;
+        min-height: 84px;
+        padding: 0.88rem 1.05rem;
+        border: 1px solid var(--line-strong);
+        background: var(--surface-strong);
+        clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.28rem;
+      }
+
+      .funnel-step:nth-child(1) {
+        background: linear-gradient(180deg, rgba(225, 244, 255, 0.96), rgba(250, 252, 255, 0.94));
+        margin-right: 0;
+      }
+
+      .funnel-step:nth-child(2) {
+        background: linear-gradient(180deg, rgba(228, 250, 244, 0.96), rgba(250, 252, 255, 0.94));
+        margin-left: 1rem;
+        margin-right: 0.6rem;
+      }
+
+      .funnel-step:nth-child(3) {
+        background: linear-gradient(180deg, rgba(240, 235, 255, 0.96), rgba(250, 252, 255, 0.94));
+        margin-left: 2rem;
+        margin-right: 1.2rem;
+      }
+
+      .funnel-step:nth-child(4) {
+        background: linear-gradient(180deg, rgba(255, 238, 226, 0.96), rgba(250, 252, 255, 0.94));
+        margin-left: 3rem;
+        margin-right: 1.8rem;
+      }
+
+      .funnel-step h3 {
+        font-size: 1.56rem;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+      }
+
+      .funnel-step p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.24;
+      }
+
+      .validation-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        background: rgba(255, 255, 255, 0.78);
+      }
+
+      .case-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.8rem;
+      }
+
+      .case-card {
+        position: relative;
+        padding: 0.92rem 0.92rem 0.88rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.86);
+        box-shadow: var(--shadow-card);
+        min-height: 228px;
+      }
+
+      .case-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 100%;
+        height: 4px;
+        background: var(--gradient-ai);
+      }
+
+      .case-card h3 {
+        margin-top: 0.25rem;
+        font-size: 1.48rem;
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .case-card p,
+      .case-card li {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.27;
+      }
+
+      .case-points {
+        padding-left: 1rem;
+      }
+
+      .takeaway-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .closing-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(252, 248, 242, 0.95));
+      }
+
+      .closing-card p {
+        font-size: 1.7rem;
+        font-weight: 900;
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+        color: var(--text);
+      }
+
+      .question-card h3 {
+        font-size: 1.28rem;
+      }
+
+      .insight-grid,
+      .closing-layout {
+        display: grid;
+        grid-template-columns: 1.25fr 1fr;
+        gap: 0.85rem;
+      }
+
+      .insight-card,
+      .question-card {
+        height: 100%;
+      }
+
+      .insight-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        padding: 1rem 1.05rem;
+      }
+
+      .insight-card h3 {
+        font-size: 2.15rem;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+      }
+
+      .insight-card p {
+        color: var(--muted);
+        font-size: 1.04rem;
+        line-height: 1.32;
+      }
+
+      .prompt-list {
+        display: grid;
+        gap: 0.65rem;
+      }
+
+      .prompt-pill {
+        padding: 0.82rem 0.9rem;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.74);
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.28;
+      }
+
+      .usecase-layout {
+        display: grid;
+        grid-template-columns: 1.02fr 0.86fr 1.02fr;
+        gap: 0.8rem;
+      }
+
+      .usecase-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding: 0.95rem 1rem 0.9rem;
+      }
+
+      .usecase-card h3 {
+        font-size: 1.7rem;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+      }
+
+      .usecase-card p {
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.28;
+      }
+
+      .usecase-media {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 308px;
+        padding: 0.6rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--line);
+        background: rgba(248, 248, 248, 0.76);
+        overflow: hidden;
+      }
+
+      .usecase-media img {
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        border-radius: 12px;
+        box-shadow: 0 10px 24px rgba(23, 27, 36, 0.08);
+      }
+
+      .repo-link {
+        color: var(--blue);
+        font-weight: 800;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(37, 99, 235, 0.24);
+      }
+
+      .repo-link:hover {
+        color: var(--violet);
+        border-bottom-color: rgba(99, 102, 241, 0.34);
+      }
+
+      .notes {
+        display: none;
+        width: var(--slide-w);
+        padding: 1rem 1.1rem;
+        border-radius: var(--radius-lg);
+        border: 1px dashed rgba(23, 27, 36, 0.18);
+        background: rgba(255, 255, 255, 0.66);
+        color: var(--muted);
+        box-shadow: var(--shadow-card);
+      }
+
+      .show-notes .notes {
+        display: block;
+      }
+
+      @media (max-width: 1280px) {
+        .nav {
+          display: none;
+        }
+      }
+
+      @page {
+        size: 13.333in 7.5in;
+        margin: 0;
+      }
+
+      @media print {
+        html,
+        body {
+          background: #ffffff;
+        }
+
+        body::before,
+        .topbar,
+        .notes {
+          display: none !important;
+        }
+
+        .deck {
+          padding: 0;
+          gap: 0;
+        }
+
+        .slide {
+          width: 13.333in;
+          gap: 0;
+          break-after: page;
+          page-break-after: always;
+        }
+
+        .slide:last-child {
+          break-after: auto;
+          page-break-after: auto;
+        }
+
+        .stage {
+          width: 13.333in;
+          height: 7.5in;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">UCSF Talk</div>
+        <nav class="nav">
+          <a href="#slide-0">Intro</a>
+          <a href="#slide-1">Who I Am</a>
+          <a href="#slide-2">Work Today</a>
+          <a href="#slide-3">Research vs Industry</a>
+          <a href="#slide-4">AI Fit</a>
+          <a href="#slide-5">Agents</a>
+          <a href="#slide-6">Validation</a>
+          <a href="#slide-7">Case I</a>
+          <a href="#slide-8">Case II</a>
+          <a href="#slide-9">Takeaways</a>
+          <a href="#slide-10">Q&amp;A</a>
+          <a href="#slide-11">Use Case</a>
+          <a href="#slide-12">Skills</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="deck">
+      <section class="slide" id="slide-0">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="opening-shell">
+              <div class="opening-copy">
+                <h1 class="title">From Research Training to <span class="accent">AI-Native Work</span></h1>
+                <p class="subtitle">How I use AI in real data and modeling work at OpenAI</p>
+                <p class="opening-meta">Jackie (Jiā Qí) Yin, UCSF, 03/31/2026</p>
+
+                <div class="hero-quote card" style="max-width: 58rem;">
+                  <blockquote>
+                    Research training taught me how to reason under uncertainty.
+                    AI changed the speed and structure of that reasoning, but not the need for judgment.
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          Keep the opening centered on the throughline, not on biography. The audience should feel from the
+          start that this talk is relevant to how they already think and work.
+        </div>
+      </section>
+
+      <section class="slide" id="slide-1">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">Why This Talk / Who I Am</p>
+              <span class="stage-index">01</span>
+            </div>
+
+            <h2 class="title" style="max-width: 13ch;">A path shaped by uncertainty, systems, and judgment</h2>
+            <p class="subtitle">The story is less about titles and more about the kinds of problems I learned to solve.</p>
+
+            <div class="timeline-grid" style="flex: 1;">
+              <article class="timeline-card">
+                <span class="year">2020</span>
+                <h3 class="card-title">UW Biostatistics</h3>
+                <p>PhD training in inference, uncertainty, and what makes a method trustworthy.</p>
+              </article>
+
+              <article class="timeline-card">
+                <span class="year">2020-2025</span>
+                <h3 class="card-title">Microsoft</h3>
+                <p>Applied science in forecasting and recommendation systems at product scale.</p>
+              </article>
+
+              <article class="timeline-card">
+                <span class="year">2025-2026</span>
+                <h3 class="card-title">Copilot Notebooks</h3>
+                <p>Context engineering, AI agent development, and LLM-as-judge evaluation.</p>
+              </article>
+
+              <article class="timeline-card">
+                <span class="year">Jan 2026</span>
+                <h3 class="card-title">OpenAI</h3>
+                <p>ML Scientist in Strategic Finance: B2B revenue forecasting and decision support.</p>
+              </article>
+            </div>
+
+            <div class="callout-band">
+              Research training -> product systems -> AI-native workflows -> finance-facing modeling
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          Keep this directional rather than chronological. The important thread is that you came from a world
+          that cared about inference, then moved into systems and product work, and now work on decision
+          support under ambiguity.
+        </div>
+      </section>
+
+      <section class="slide" id="slide-2">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">What My Work Looks Like Today</p>
+              <span class="stage-index">02</span>
+            </div>
+
+            <h2 class="title" style="max-width: 12ch;">The job is not just model building</h2>
+            <p class="subtitle">A large part of the work is turning ambiguous business questions into quantitative ones.</p>
+
+            <div class="split-layout" style="flex: 1;">
+              <article class="panel card">
+                <p class="label">Operating context</p>
+                <h3>High-context decisions, evolving assumptions, established planning workflows</h3>
+                <ul>
+                  <li>Revenue forecasting for a fast-growing B2B business</li>
+                  <li>Understanding pipeline risk, timing, and uncertainty</li>
+                  <li>Supporting finance and planning decisions</li>
+                </ul>
+              </article>
+
+              <article class="panel card">
+                <p class="label">My role</p>
+                <h3 class="gradient">Translate intuition into structure</h3>
+                <ul>
+                  <li>Bridge domain intuition and mathematical structure</li>
+                  <li>Turn existing planning logic into reusable modeling workflows</li>
+                  <li>Support decisions, not just produce numbers</li>
+                  <li>Make the work more explainable, scalable, and reusable</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="callout-band">
+              Finance partners often have strong intuition about both downside risk and revenue potential. My job is to preserve that signal while turning it into a reusable modeling framework.
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          Emphasize that the core challenge is not replacing existing workflows. It is taking strong domain
+          intuition, scenario-based planning, and caveats, then turning them into a structure that can support
+          real planning decisions at scale.
+        </div>
+      </section>
+
+      <section class="slide" id="slide-3">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">Research Thinking vs. Industry Data and Modeling Work</p>
+              <span class="stage-index">03</span>
+            </div>
+
+            <h2 class="title" style="max-width: 12ch;">The reasoning carries over. The objective function changes.</h2>
+
+            <div class="chip-row">
+              <span class="chip">Reason under incomplete information</span>
+              <span class="chip">Separate signal from noise</span>
+              <span class="chip">Break big problems into parts</span>
+              <span class="chip">Iterate instead of expecting one-shot answers</span>
+            </div>
+
+            <div class="compare-layout" style="flex: 1;">
+              <article class="panel card">
+                <p class="label">Research</p>
+                <h3>Go deeper on one problem</h3>
+                <ul>
+                  <li>Novelty and methodological contribution matter</li>
+                  <li>Technical elegance is often rewarded</li>
+                  <li>A result can stay specialized and still be valuable</li>
+                  <li>The audience is often willing to learn the method deeply</li>
+                </ul>
+              </article>
+
+              <article class="panel card">
+                <p class="label">Industry data and modeling work</p>
+                <h3>Solve the decision problem under constraints</h3>
+                <ul>
+                  <li>Speed, alignment, and implementation matter</li>
+                  <li>Methods need to be understandable enough to use</li>
+                  <li>Complexity has a maintenance and adoption cost</li>
+                  <li>Simple and useful can beat sophisticated and fragile</li>
+                </ul>
+              </article>
+            </div>
+
+          </div>
+        </div>
+        <div class="notes">
+          This is the bridge slide. It tells the audience their research habits still matter, but the output
+          of the work is different. You can also mention that AI makes it faster to adapt useful academic ideas.
+        </div>
+      </section>
+
+      <section class="slide compact" id="slide-4">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">Where AI Fits in My Workflow</p>
+              <span class="stage-index">04</span>
+            </div>
+
+            <h2 class="title compact" style="max-width: 11ch;">Where AI Fits</h2>
+            <p class="subtitle compact">Different task types need different levels of supervision, reuse, and judgment.</p>
+
+            <div class="workflow-layout" style="flex: 1;">
+              <article class="workflow-card blue card">
+                <p class="label">Ad hoc analysis</p>
+                <h3>One-off questions</h3>
+                <p class="sub-label">AI best at</p>
+                <p>Fast querying, plots, and first-pass code.</p>
+                <p class="sub-label">My role</p>
+                <p>Evaluate output and catch bad assumptions.</p>
+              </article>
+
+              <article class="workflow-card teal card">
+                <p class="label">Operational workflow</p>
+                <h3>Repeatable work</h3>
+                <p class="sub-label">AI best at</p>
+                <p>Turning one-off workflows into reusable pipelines.</p>
+                <p class="sub-label">My role</p>
+                <p>Define structure and monitoring.</p>
+              </article>
+
+              <article class="workflow-card violet card">
+                <p class="label">Novel modeling work</p>
+                <h3>New modeling questions</h3>
+                <p class="sub-label">AI best at</p>
+                <p>Exploring formulations and coding baselines fast.</p>
+                <p class="sub-label">My role</p>
+                <p>Choose the framing and decide what matters.</p>
+              </article>
+
+              <article class="workflow-card orange card">
+                <p class="label">Cross-functional communication</p>
+                <h3>Stakeholder translation</h3>
+                <p class="sub-label">AI best at</p>
+                <p>Reframing technical findings for finance or business.</p>
+                <p class="sub-label">My role</p>
+                <p>Preserve nuance and avoid overclaiming.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          This slide should feel practical. The important point is that “using AI” is not one thing. The
+          human supervisory structure changes depending on the kind of work.
+        </div>
+      </section>
+
+      <section class="slide compact" id="slide-5">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">Why I Treat AI Like Junior Scientists</p>
+              <span class="stage-index">05</span>
+            </div>
+
+            <h2 class="title compact" style="max-width: 15ch;">AI as Junior Scientists</h2>
+            <p class="subtitle compact">Can we predict whether a patient will respond to treatment?</p>
+
+            <div class="parallel-layout" style="flex: 1;">
+              <article class="column-card card">
+                <p class="label">Pre-AI: serial exploration</p>
+                <h3>One person, one path at a time</h3>
+                <p class="small-note">Typical first pass: about 1 week</p>
+                <div class="step-stack">
+                  <div class="step-card">1. Code + run logistic regression</div>
+                  <div class="down">↓</div>
+                  <div class="step-card">2. Inspect, revise, then try trees</div>
+                  <div class="down">↓</div>
+                  <div class="step-card">3. If needed, test a neural baseline</div>
+                </div>
+              </article>
+
+              <article class="column-card card">
+                <p class="label">AI-native: parallel first pass</p>
+                <h3 class="gradient">Parallel method search</h3>
+                <p class="small-note">Typical first pass: about 30 minutes</p>
+                <div class="agent-grid">
+                  <div class="agent">
+                    <strong>Agent 1</strong>
+                    <h4>Logistic regression track</h4>
+                  </div>
+                  <div class="agent">
+                    <strong>Agent 2</strong>
+                    <h4>Tree-based track</h4>
+                  </div>
+                  <div class="agent">
+                    <strong>Agent 3</strong>
+                    <h4>Neural baseline track</h4>
+                  </div>
+                </div>
+                <div class="compare-callout">
+                  <p>~1 week serial -&gt; ~30 min parallel first pass</p>
+                </div>
+              </article>
+            </div>
+
+          </div>
+        </div>
+        <div class="notes">
+          The junior scientist metaphor is memorable because it is about management and judgment, not only capability.
+          AI is useful because it parallelizes early exploration while you keep the final judgment.
+        </div>
+      </section>
+
+      <section class="slide compact" id="slide-6">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">Trusting AI Output</p>
+              <span class="stage-index">06</span>
+            </div>
+
+            <h2 class="title compact" style="max-width: 13ch;">What I Need to Trust an AI Result</h2>
+            <p class="subtitle compact">I do not treat confident language as correctness.</p>
+
+            <div class="validation-layout" style="flex: 1;">
+              <div class="validation-stack">
+                <div class="funnel-step">
+                  <h3>1. Data sanity</h3>
+                  <p>Check summary stats, historical patterns, and impossible values.</p>
+                </div>
+                <div class="funnel-step">
+                  <h3>2. Model agreement</h3>
+                  <p>Reasonable models can differ. Big disagreement needs explanation.</p>
+                </div>
+                <div class="funnel-step">
+                  <h3>3. Metric definition</h3>
+                  <p>Ask how the metric is defined, coded, and why it fits the goal.</p>
+                </div>
+                <div class="funnel-step">
+                  <h3>4. Independent restatement</h3>
+                  <p>Use a fresh agent to restate the core logic in words or math.</p>
+                </div>
+              </div>
+
+              <aside class="validation-sidebar card">
+                <p class="label">Trust criteria</p>
+                <ul>
+                  <li>Do I trust the data source and slice?</li>
+                  <li>Do I trust the evaluation setup?</li>
+                  <li>Does the metric match the decision goal?</li>
+                  <li>Can the logic be restated clearly, in words or in math?</li>
+                  <li>Is the conclusion stronger than the evidence?</li>
+                </ul>
+                <div class="takeaway-callout">
+                  <p>Trust comes from checking the pressure points, not from reading every line.</p>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          This slide is about trust standards rather than bug hunting. The point is that a research-trained
+          workflow does not trust fluent output by default; it earns trust by checking the highest-pressure points.
+        </div>
+      </section>
+
+      <section class="slide compact" id="slide-7">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">A Research Workflow Example</p>
+              <span class="stage-index">07</span>
+            </div>
+
+            <h2 class="title compact" style="max-width: 14ch;">From Research Question to AI Execution Notes</h2>
+            <p class="subtitle compact">Can we predict whether a patient will respond to treatment?</p>
+
+            <div class="case-grid" style="flex: 1;">
+              <article class="case-card">
+                <strong>Step 1</strong>
+                <h3>Formalize the question</h3>
+                <ul class="case-points">
+                  <li>What counts as response?</li>
+                  <li>When is prediction made?</li>
+                  <li>What inputs exist at that time?</li>
+                </ul>
+              </article>
+
+              <article class="case-card">
+                <strong>Step 2</strong>
+                <h3>Write the quant setup</h3>
+                <ul class="case-points">
+                  <li>Binary outcome</li>
+                  <li>Baseline features</li>
+                  <li>Train/validation split</li>
+                  <li>Primary metric</li>
+                </ul>
+              </article>
+
+              <article class="case-card">
+                <strong>Step 3</strong>
+                <h3>Make execution notes</h3>
+                <ul class="case-points">
+                  <li>Question and target definition</li>
+                  <li>Features and split</li>
+                  <li>Baselines to run</li>
+                  <li>Failure modes to watch</li>
+                </ul>
+              </article>
+
+              <article class="case-card">
+                <strong>Step 4</strong>
+                <h3>Why this helps</h3>
+                <ul class="case-points">
+                  <li>Think first, delegate second</li>
+                  <li>AI gets an execution spec</li>
+                  <li>Less ambiguity during implementation</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="callout-band">
+              Do the problem formulation yourself first. Then give AI an execution spec, not a vague idea.
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          This slide is about how you would actually start the project. The key move is to think through the
+          quantitative setup yourself, then write it down in a markdown file that AI can execute against.
+        </div>
+      </section>
+
+      <section class="slide compact" id="slide-8">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">A Research Workflow Example</p>
+              <span class="stage-index">08</span>
+            </div>
+
+            <h2 class="title compact" style="max-width: 14ch;">After AI Runs: Review, Validate, and Explore</h2>
+            <p class="subtitle compact">Once AI executes, the work becomes comparison, validation, and judgment.</p>
+
+            <div class="case-grid" style="flex: 1;">
+              <article class="case-card">
+                <strong>Run set</strong>
+                <h3>What I ask AI to run</h3>
+                <ul class="case-points">
+                  <li>Regularized logistic regression</li>
+                  <li>Tree-based model</li>
+                  <li>Neural baseline</li>
+                </ul>
+              </article>
+
+              <article class="case-card">
+                <strong>Check 1</strong>
+                <h3>What I check first</h3>
+                <ul class="case-points">
+                  <li>Target defined correctly</li>
+                  <li>Split is clean</li>
+                  <li>No leakage</li>
+                  <li>Metric matches the goal</li>
+                </ul>
+              </article>
+
+              <article class="case-card">
+                <strong>Check 2</strong>
+                <h3>How I compare results</h3>
+                <ul class="case-points">
+                  <li>Are differences reasonable?</li>
+                  <li>Stable across slices?</li>
+                  <li>Signals scientifically plausible?</li>
+                  <li>Claims stronger than evidence?</li>
+                </ul>
+              </article>
+
+              <article class="case-card">
+                <strong>Explore</strong>
+                <h3>How I explore the method space</h3>
+                <ul class="case-points">
+                  <li>If simple models are close, keep them</li>
+                  <li>If tree-based wins, inspect interactions</li>
+                  <li>If nothing is stable, revisit the setup</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="callout-band">
+              The bottleneck is not running more models. It is knowing when to trust the setup, when to simplify, and when to reformulate the question.
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          This slide is about what happens after AI executes. The student-facing lesson is that model generation
+          is cheap; comparison, validation, and deciding when to go back to the problem setup are the real work.
+        </div>
+      </section>
+
+      <section class="slide compact" id="slide-9">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">Takeaways for Researchers</p>
+              <span class="stage-index">09</span>
+            </div>
+
+            <h2 class="title compact" style="max-width: 13ch;">Research Training Becomes More Valuable</h2>
+            <p class="subtitle compact">AI changes the shape of the work, but it increases the return on good judgment.</p>
+
+            <div class="takeaway-layout" style="flex: 1;">
+              <article class="takeaway-card card">
+                <p class="label">What to do</p>
+                <h3>Start with the most painful bottlenecks</h3>
+                <ul>
+                  <li>Use AI first for acceleration, not blind delegation</li>
+                  <li>Separate exploration, implementation, and validation</li>
+                  <li>Treat AI like a collaborator, not an authority</li>
+                  <li>Keep final scientific or modeling judgment with the human</li>
+                </ul>
+              </article>
+
+              <article class="takeaway-card card">
+                <p class="label">What changed for me</p>
+                <h3 class="gradient">Judgment becomes more valuable, not less</h3>
+                <ul>
+                  <li>Problem formulation matters more</li>
+                  <li>Validation matters more</li>
+                  <li>Communication matters more</li>
+                  <li>Strong research habits become more important, not less</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="callout-band">
+              AI did not remove the need for research thinking. It made that thinking more leveraged, more parallel, and more visible in daily work.
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          End this slide as the main message slide. The point is not that AI replaces researchers. The point is that strong researchers are often better positioned to use AI well.
+        </div>
+      </section>
+
+      <section class="slide compact" id="slide-10">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">Closing / Discussion</p>
+              <span class="stage-index">10</span>
+            </div>
+
+            <h2 class="title compact" style="max-width: 11ch;">Questions Worth Leaving With</h2>
+
+            <div class="closing-layout" style="flex: 1;">
+              <article class="insight-card card">
+                <p class="label">Closing thought</p>
+                <h3>AI changes how we search, build, and explain.</h3>
+                <p>
+                  The strongest shift for me was not that AI writes code. It is that AI changes how quickly I can
+                  explore a problem, compare options, and turn reasoning into something other people can use.
+                </p>
+                <div class="callout-band">
+                  Human value concentrates in decomposition, validation, prioritization, and taste.
+                </div>
+              </article>
+
+              <article class="question-card card">
+                <p class="label">My curiosity</p>
+                <h3>What I'd love to learn from you</h3>
+                <div class="prompt-list">
+                  <div class="prompt-pill">What kinds of data do you work with, and where does the workflow get painful?</div>
+                  <div class="prompt-pill">Where do you think AI could help in your research, and where do you still not trust it?</div>
+                  <div class="prompt-pill">What would make AI genuinely useful in your work, not just convenient?</div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          Use this as the conversation slide. By this point the core content is done, so you can end on the closing
+          thought and then open the room with prompts that map back to their own lab workflows.
+        </div>
+      </section>
+
+      <section class="slide compact" id="slide-11">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">A Real Codex Use Case</p>
+              <span class="stage-index">11</span>
+            </div>
+
+            <h2 class="title compact" style="max-width: 15ch;">Refreshing My Personal Website</h2>
+            <p class="subtitle compact">A simple before -> prompt -> after example of how I use Codex on real design and implementation work.</p>
+
+            <div class="usecase-layout" style="flex: 1;">
+              <article class="usecase-card card">
+                <p class="label">Before</p>
+                <h3>Functional, but visually flat</h3>
+                <div class="usecase-media">
+                  <img src="use-case/personal-website/website-before.png" alt="Before redesign screenshot of personal website" />
+                </div>
+              </article>
+
+              <article class="usecase-card card">
+                <p class="label">Prompt</p>
+                <h3>One natural-language request</h3>
+                <div class="usecase-media">
+                  <img src="use-case/personal-website/website-codex.png" alt="Prompt screenshot used for Codex website redesign request" />
+                </div>
+              </article>
+
+              <article class="usecase-card card">
+                <p class="label">After</p>
+                <h3>Clearer hierarchy, stronger identity</h3>
+                <div class="usecase-media">
+                  <img src="use-case/personal-website/website-after.png" alt="After redesign screenshot of personal website" />
+                </div>
+              </article>
+            </div>
+
+          </div>
+        </div>
+        <div class="notes">
+          Keep this page concrete and personal. The point is not that the website itself matters; the point is that
+          Codex can help move a vague design change from prompt to implementation quickly, with real before/after output.
+        </div>
+      </section>
+
+      <section class="slide compact" id="slide-12">
+        <div class="stage">
+          <div class="stage-inner">
+            <div class="topline">
+              <p class="eyebrow">Another Real Use Case</p>
+              <span class="stage-index">12</span>
+            </div>
+
+            <h2 class="title compact" style="max-width: 14ch;">Turning Workflows Into Codex Skills</h2>
+            <p class="subtitle compact">If a workflow repeats, even on different data, it can often become a reusable skill.</p>
+
+            <div class="workflow-layout" style="flex: 1;">
+              <article class="workflow-card blue card">
+                <p class="label">What is a Codex skill?</p>
+                <h3>Reusable workflow packaging</h3>
+                <p>A skill bundles instructions, structure, and optional scripts into something Codex can reuse.</p>
+                <p class="sub-label">Typical pieces</p>
+                <p>`SKILL.md`, scripts, references, assets.</p>
+              </article>
+
+              <article class="workflow-card teal card">
+                <p class="label">Why I make them</p>
+                <h3>Repeatability is the value</h3>
+                <p>The inputs change, but the methodology, checks, and output shape often stay similar.</p>
+                <p class="sub-label">So what?</p>
+                <p>Turn one successful run into reusable infrastructure.</p>
+              </article>
+
+              <article class="workflow-card violet card">
+                <p class="label">How I build one</p>
+                <h3>Start from one concrete run</h3>
+                <p>Do one full run first. Keep the code, notes, and artifacts. Then ask Codex to turn it into a generic reusable skill for that workflow.</p>
+              </article>
+
+              <article class="workflow-card orange card">
+                <p class="label">Examples in my repo</p>
+                <h3>Current examples</h3>
+                <ul>
+                  <li><strong>`tabular-data-explorer`</strong>: explainable dataset exploration</li>
+                  <li><strong>`arxiv-latest-summary`</strong>: readable paper digests</li>
+                  <li><strong>`experiment-results-notebook`</strong>: structured research notebooks</li>
+                </ul>
+                <p style="margin-top: 0.2rem;">
+                  <a class="repo-link" href="https://github.com/jackie-jiaqi-yin/codex-skills" target="_blank" rel="noopener noreferrer">
+                    github.com/jackie-jiaqi-yin/codex-skills
+                  </a>
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          Explain that the value is not only personal speed. Once a repeated workflow is packaged as a skill,
+          other people can install it, reuse it, and start from a much better baseline.
+        </div>
+      </section>
+    </main>
+
+    <script>
+      window.addEventListener("load", () => {
+        if (!window.location.hash) return;
+        const target = document.querySelector(window.location.hash);
+        if (!target) return;
+        window.setTimeout(() => {
+          target.scrollIntoView({ behavior: "instant", block: "start" });
+        }, 60);
+      });
+    </script>
+  </body>
+</html>
