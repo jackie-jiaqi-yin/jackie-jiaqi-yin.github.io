@@ -118,7 +118,7 @@ classes:
     <div class="updates-grid">
       {% for item in site.data.news limit:4 %}
         {% if item.url %}
-          <a class="update-card update-card--link" href="{{ item.url }}" data-preview-modal="news" data-preview-title="{{ item.title | escape }}" data-preview-summary="{{ item.summary | escape }}">
+          <a class="update-card update-card--link" href="{{ item.url }}" data-preview-modal="news" data-preview-title="{{ item.title | escape }}" data-preview-summary="{{ item.summary | escape }}"{% if item.preview_image %} data-preview-image="{{ item.preview_image | relative_url }}"{% endif %}>
             <span class="news-card__link-badge">Link</span>
             <span class="update-card__date">{{ item.date_label }}</span>
             <h3>{{ item.title }}</h3>

@@ -1,3 +1,13 @@
+- date_label: "July 2026"
+  title: "MotionAge Accepted to MLHC 2026 Main Conference"
+  summary: "MotionAge: A Deep Learning Framework for Biological Age Prediction from Wearable Activity, a Columbia University collaboration I co-first-authored, was accepted to the MLHC 2026 main conference."
+
+- date_label: "May 2026"
+  title: "MotionAge Accepted to SD4H ICML 2026"
+  summary: "MotionAge: A Deep Learning Framework for Biological Age Prediction from Wearable Activity, a Columbia University collaboration I co-first-authored, was accepted as a poster at the SD4H ICML 2026 Workshop."
+  url: "https://openreview.net/forum?id=xGw1o9acWa"
+  preview_image: "/assets/images/news/motionage-figure-1.jpg"
+
 - date_label: "March 2026"
   title: "Talk at UCSF Biostatistics Lab"
   summary: "Had a discussion with the UCSF Biostatistics lab on how research training carries into AI-native work, including problem formulation, validation, and the role of human judgment in real data and modeling workflows."

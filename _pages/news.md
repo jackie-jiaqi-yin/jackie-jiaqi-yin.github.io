@@ -24,7 +24,7 @@ classes:
     <div class="news-grid">
       {% for item in site.data.news %}
         {% if item.url %}
-          <a class="news-card news-card--link" href="{{ item.url }}" data-preview-modal="news" data-preview-title="{{ item.title | escape }}" data-preview-summary="{{ item.summary | escape }}">
+          <a class="news-card news-card--link" href="{{ item.url }}" data-preview-modal="news" data-preview-title="{{ item.title | escape }}" data-preview-summary="{{ item.summary | escape }}"{% if item.preview_image %} data-preview-image="{{ item.preview_image | relative_url }}"{% endif %}>
             <span class="news-card__link-badge">Link</span>
             <span class="news-card__date">{{ item.date_label }}</span>
             <h2>{{ item.title }}</h2>
