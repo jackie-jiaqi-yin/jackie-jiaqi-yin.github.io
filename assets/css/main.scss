@@ -1241,10 +1241,18 @@ html.theme-light .showcase-card__body p {
 }
 
 .preview-modal__frame,
+.preview-modal__image,
 .preview-modal__fallback {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.preview-modal__image {
+  display: block;
+  padding: 1.2rem;
+  object-fit: contain;
+  background: #fff;
 }
 
 .preview-modal__fallback {

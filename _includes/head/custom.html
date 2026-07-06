@@ -164,6 +164,7 @@
 
     var previewDialog = document.querySelector("[data-preview-dialog]");
     var previewFrame = previewDialog ? previewDialog.querySelector("[data-preview-frame]") : null;
+    var previewImageViewer = previewDialog ? previewDialog.querySelector("[data-preview-image-viewer]") : null;
     var previewTitle = previewDialog ? previewDialog.querySelector("[data-preview-title]") : null;
     var previewSummary = previewDialog ? previewDialog.querySelector("[data-preview-summary]") : null;
     var previewOrigin = previewDialog ? previewDialog.querySelector("[data-preview-origin]") : null;
@@ -183,6 +184,11 @@
         previewFrame.setAttribute("src", "about:blank");
       }
 
+      if (previewImageViewer) {
+        previewImageViewer.removeAttribute("src");
+        previewImageViewer.setAttribute("alt", "");
+      }
+
       if (lastPreviewTrigger) {
         if (shouldRestorePreviewFocus) {
           lastPreviewTrigger.focus();
@@ -198,7 +204,9 @@
       var sourceUrl = link.getAttribute("href");
       var title = link.getAttribute("data-preview-title") || link.textContent.trim();
       var summary = link.getAttribute("data-preview-summary") || "";
+      var previewImageUrl = link.getAttribute("data-preview-image") || "";
       var previewUrl = link.getAttribute("data-preview-url") || getPreviewUrl(sourceUrl);
+      var hasPreviewImage = Boolean(previewImageUrl);
       var canEmbed = Boolean(previewUrl);
       var origin = "";
 
@@ -219,12 +227,23 @@
       }
 
       if (previewFrame) {
-        previewFrame.hidden = !canEmbed;
-        previewFrame.setAttribute("src", canEmbed ? previewUrl : "about:blank");
+        previewFrame.hidden = hasPreviewImage || !canEmbed;
+        previewFrame.setAttribute("src", !hasPreviewImage && canEmbed ? previewUrl : "about:blank");
+      }
+
+      if (previewImageViewer) {
+        previewImageViewer.hidden = !hasPreviewImage;
+        if (hasPreviewImage) {
+          previewImageViewer.setAttribute("src", previewImageUrl);
+          previewImageViewer.setAttribute("alt", title + " preview image");
+        } else {
+          previewImageViewer.removeAttribute("src");
+          previewImageViewer.setAttribute("alt", "");
+        }
       }
 
       if (previewFallback) {
-        previewFallback.hidden = canEmbed;
+        previewFallback.hidden = hasPreviewImage || canEmbed;
       }
 
       previewDialog.hidden = false;
