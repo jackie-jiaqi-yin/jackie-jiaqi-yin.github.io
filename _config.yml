@@ -274,6 +274,9 @@ collections:
   projects:
     output: true
     permalink: /projects/:name/
+  blogs:
+    output: true
+    permalink: /blogs/:name/
 
 
 # Plugins (previously gems:)
@@ -352,3 +355,12 @@ defaults:
       author_profile: false
       classes:
         - project-detail-page
+  - scope:
+      path: ""
+      type: blogs
+    values:
+      layout: blog-post
+      author_profile: false
+      classes:
+        - blog-post-page
+      show_date: true

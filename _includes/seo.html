@@ -18,6 +18,11 @@
   {%- assign seo_description = seo_description | markdownify | strip_html | newline_to_br | strip_newlines | replace: '<br />', ' ' | escape_once | strip -%}
 {%- endif -%}
 
+{%- assign seo_keywords = page.keywords | default: page.tags -%}
+{%- if seo_keywords -%}
+  {%- assign seo_keywords = seo_keywords | join: ", " | markdownify | strip_html | strip_newlines | escape_once | strip -%}
+{%- endif -%}
+
 {%- assign author = page.author | default: page.authors[0] | default: site.author -%}
 {%- assign author = site.data.authors[author] | default: author -%}
 
@@ -29,7 +34,7 @@
 {%- assign page_teaser_image = page.header.teaser | default: page.card_image | default: site.og_image | absolute_url | escape -%}
 {%- assign site_og_image = site.og_image | absolute_url | escape -%}
 
-{%- if page.collection == "posts" -%}
+{%- if page.collection == "posts" or page.collection == "blogs" -%}
   {%- assign og_type = "article" -%}
 {%- else -%}
   {%- assign og_type = "website" -%}
@@ -37,6 +42,9 @@
 
 <title>{{ seo_title }}{% if paginator %}{% unless paginator.page == 1 %} {{ title_separator }} {{ site.data.ui-text[site.locale].page | default: "Page" }} {{ paginator.page }}{% endunless %}{% endif %}</title>
 <meta name="description" content="{{ seo_description }}">
+{% if seo_keywords %}
+  <meta name="keywords" content="{{ seo_keywords }}">
+{% endif %}
 
 {% if author.name %}
   <meta name="author" content="{{ author.name | default: author }}">
@@ -63,20 +71,22 @@
 
 {% if site.twitter.username %}
   <meta name="twitter:site" content="@{{ site.twitter.username | replace: "@", "" }}">
-  <meta name="twitter:title" content="{{ page_title }}">
-  <meta name="twitter:description" content="{{ seo_description }}">
-  <meta name="twitter:url" content="{{ canonical_url }}">
+{% endif %}
+<meta name="twitter:title" content="{{ page_title }}">
+<meta name="twitter:description" content="{{ seo_description }}">
+<meta name="twitter:url" content="{{ canonical_url }}">
 
-  {% if page_large_image %}
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="{{ page_large_image }}">
-  {% else %}
-    <meta name="twitter:card" content="summary">
-    {% if page_teaser_image %}
-      <meta name="twitter:image" content="{{ page_teaser_image }}">
-    {% endif %}
+{% if page_large_image %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ page_large_image }}">
+{% else %}
+  <meta name="twitter:card" content="summary">
+  {% if page_teaser_image %}
+    <meta name="twitter:image" content="{{ page_teaser_image }}">
   {% endif %}
+{% endif %}
 
+{% if site.twitter.username %}
   {% if author_twitter %}
     <meta name="twitter:creator" content="@{{ author_twitter }}">
   {% endif %}
@@ -88,6 +98,12 @@
 
 {% if og_type == "article" and page.last_modified_at %}
   <meta property="article:modified_time" content="{{ page.last_modified_at | date_to_xmlschema }}">
+{% endif %}
+
+{% if og_type == "article" and page.tags %}
+  {% for tag in page.tags %}
+    <meta property="article:tag" content="{{ tag }}">
+  {% endfor %}
 {% endif %}
 
 {% if site.facebook %}
@@ -110,6 +126,69 @@
 {% endif %}
 
 {% include schema.html %}
+
+{% if page.url == "/blogs/" %}
+  {% assign sorted_blogs = site.blogs | sort: "date" | reverse %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Jackie Jiaqi Yin Blogs",
+    "url": {{ canonical_url | jsonify }},
+    "description": {{ seo_description | jsonify }},
+    "author": {
+      "@type": "Person",
+      "name": {{ site.social.name | default: site.name | jsonify }},
+      "url": {{ '/' | absolute_url | jsonify }}
+    },
+    "blogPost": [{% for post in sorted_blogs %}
+      {
+        "@type": "BlogPosting",
+        "headline": {{ post.title | jsonify }},
+        "url": {{ post.url | absolute_url | jsonify }}{% if post.date %},
+        "datePublished": {{ post.date | date_to_xmlschema | jsonify }}{% endif %}{% if post.summary %},
+        "description": {{ post.summary | jsonify }}{% endif %}
+      }{% unless forloop.last %},{% endunless %}{% endfor %}
+    ]
+  }
+  </script>
+{% endif %}
+
+{% if page.collection == "blogs" %}
+  {% assign blog_date_modified = page.last_modified_at | default: page.date %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ page.title | jsonify }},
+    "url": {{ canonical_url | jsonify }},
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ canonical_url | jsonify }}
+    },
+    "description": {{ seo_description | jsonify }}{% if page.date %},
+    "datePublished": {{ page.date | date_to_xmlschema | jsonify }}{% endif %}{% if blog_date_modified %},
+    "dateModified": {{ blog_date_modified | date_to_xmlschema | jsonify }}{% endif %}{% if seo_keywords %},
+    "keywords": {{ seo_keywords | jsonify }}{% endif %}{% if page_large_image %},
+    "image": {{ page_large_image | jsonify }}{% endif %},
+    "author": {
+      "@type": "Person",
+      "name": {{ site.social.name | default: site.name | jsonify }},
+      "url": {{ '/' | absolute_url | jsonify }}
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": {{ site.social.name | default: site.name | jsonify }},
+      "url": {{ '/' | absolute_url | jsonify }}
+    },
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Jackie Jiaqi Yin Blogs",
+      "url": {{ '/blogs/' | absolute_url | jsonify }}
+    }
+  }
+  </script>
+{% endif %}
 
 {% if site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />

@@ -1,0 +1,53 @@
+---
+layout: default
+---
+
+<section class="blog-post-shell">
+  <div class="page-shell">
+    <a class="project-back blog-back" href="{{ '/blogs/' | relative_url }}">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      Back to blogs
+    </a>
+
+    <article class="blog-article">
+      <header class="blog-post__header">
+        <p class="eyebrow">Blogs</p>
+        <h1>{{ page.title }}</h1>
+        <div class="blog-post__meta">
+          {% if page.date %}
+            <span>{{ page.date | date: "%B %-d, %Y" }}</span>
+          {% endif %}
+          {% if page.tags %}
+            <span class="blog-post__tags">
+              {% for tag in page.tags %}
+                <span class="blog-tag">{{ tag }}</span>
+              {% endfor %}
+            </span>
+          {% endif %}
+        </div>
+        {% if page.summary %}
+          <p class="blog-post__summary">{{ page.summary }}</p>
+        {% endif %}
+      </header>
+
+      {% if page.embed_path %}
+        <section class="blog-post__embed" aria-label="{{ page.embed_title | default: page.title | escape }}">
+          <iframe
+            class="blog-post__embed-frame"
+            data-blog-embed-frame
+            src="{{ page.embed_path | relative_url }}"
+            title="{{ page.embed_title | default: page.title | escape }}"
+            loading="lazy"
+          ></iframe>
+        </section>
+      {% endif %}
+
+      {% assign body_content = content | strip %}
+      {% if body_content != "" %}
+        <section class="blog-post__content">
+          {{ content }}
+        </section>
+      {% endif %}
+    </article>
+  </div>
+</section>
